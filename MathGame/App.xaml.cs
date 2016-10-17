@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MathGame_WPF
+namespace MathGame
 {
     /// <summary>
     /// Interaction logic for App.xaml

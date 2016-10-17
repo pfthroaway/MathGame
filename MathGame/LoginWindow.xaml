@@ -1,0 +1,28 @@
+﻿<Window x:Name="windowLogin" x:Class="MathGame.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathGame"
+        mc:Ignorable="d"
+        Title="LoginWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Math.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Username" TextAlignment="Center" Margin="10,10,10,5" />
+        <TextBox x:Name="txtUsername" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" Margin="10,0,10,5" TextChanged="txtUsername_TextChanged" GotFocus="txtUsername_GotFocus" MaxLength="20" Width="260" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Password" TextAlignment="Center" Margin="10,5,10,5" />
+        <PasswordBox x:Name="pswdPassword" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalContentAlignment="Center" Margin="10,0,10,10" PasswordChanged="pswdPassword_PasswordChanged" GotFocus="pswdPassword_GotFocus" Width="260" />
+        <Button x:Name="btnLogin" Grid.Column="0" Grid.Row="4" Content="_Login" Width="120" Height="30" Margin="10" IsEnabled="False" IsDefault="True" Click="btnLogin_Click" />
+        <Button x:Name="btnNewPlayer" Grid.Column="1" Grid.Row="4" Content="_New Player" Width="120" Height="30" Margin="10" Click="btnNewPlayer_Click" />
+    </Grid>
+</Window>

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
-namespace MathGame_WPF
+namespace MathGame
 {
     internal static class ThreadSafeRandom
     {
@@ -15,6 +16,42 @@ namespace MathGame_WPF
         internal static Random ThisThreadsRandom
         {
             get { return Local ?? (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId))); }
+        }
+    }
+
+    internal static class Int32Helper
+    {
+        internal static int Parse(string text)
+        {
+            int temp = 0;
+            int.TryParse(text, out temp);
+            return temp;
+        }
+
+        internal static int Parse(double dbl)
+        {
+            int temp = 0;
+            try
+            {
+                temp = (int)dbl;
+            }
+            catch (Exception e)
+            { MessageBox.Show(e.Message, "Sulimn", MessageBoxButton.OK); }
+
+            return temp;
+        }
+
+        internal static int Parse(decimal dcml)
+        {
+            int temp = 0;
+            try
+            {
+                temp = (int)dcml;
+            }
+            catch (Exception e)
+            { MessageBox.Show(e.Message, "Sulimn", MessageBoxButton.OK); }
+
+            return temp;
         }
     }
 

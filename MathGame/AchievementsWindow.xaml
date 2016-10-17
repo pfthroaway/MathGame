@@ -1,0 +1,46 @@
+﻿<Window x:Name="windowAchievements" x:Class="MathGame.AchievementsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathGame"
+        mc:Ignorable="d"
+        Title="Achievements" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Math.ico" Closing="windowAchievements_Closing">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="achievementNameTemplate">
+                <TextBlock Text="{Binding Path=Name}" />
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Column="0" Grid.Row="0" Header="Unlocked Achievements" Margin="10,10,10,5">
+            <ListBox x:Name="lstUnlocked" Height="300" Width="300" ItemsSource="{Binding}" ItemTemplate="{StaticResource achievementNameTemplate}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lstUnlocked_SelectionChanged" />
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Achievement Information" Margin="10,10,10,5">
+            <StackPanel Margin="10">
+                <TextBlock x:Name="lblTypeUnlocked" Width="290" Margin="5" Text="{Binding Path=TypeWithText, Mode=OneWay}" TextWrapping="Wrap" />
+                <TextBlock x:Name="lblDescriptionUnlocked" Width="290" Height="72" Margin="5" Text="{Binding Path=Description, Mode=OneWay}" TextWrapping="Wrap" />
+                <TextBlock x:Name="lblPointsUnlocked" Width="290" Margin="5" Text="{Binding Path=PointsToString, Mode=OneWay}" TextWrapping="Wrap" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="0" Grid.Row="1" Header="Locked Achievements" Margin="10,5,10,10">
+            <ListBox x:Name="lstLocked" Height="300" Width="300" ItemsSource="{Binding}" ItemTemplate="{StaticResource achievementNameTemplate}"  Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lstLocked_SelectionChanged" />
+        </GroupBox>
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="Achievement Information" Margin="10,5,10,10">
+            <StackPanel Margin="10">
+                <TextBlock x:Name="lblTypeLocked" Width="290" Margin="5" Text="{Binding Path=TypeWithText, Mode=OneWay}" TextWrapping="Wrap" />
+                <TextBlock x:Name="lblDescriptionLocked" Width="290" Height="72" Margin="5" Text="{Binding Path=Description, Mode=OneWay}" TextWrapping="Wrap" />
+                <TextBlock x:Name="lblPointsLocked" Width="290" Margin="5" Text="{Binding Path=PointsToString, Mode=OneWay}" TextWrapping="Wrap" />
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="btnBack" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="120" Height="30" Content="_Back" Margin="0,0,0,10" IsCancel="True" Click="btnBack_Click" />
+    </Grid>
+</Window>

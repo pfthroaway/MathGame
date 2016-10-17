@@ -1,105 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-namespace MathGame_WPF
+namespace MathGame
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Math Methods
+        internal LoginWindow RefToLoginWindow { get; set; }
 
         /// <summary>
-        /// Opens the Question Window for Addition questions.
+        /// Opens the Question Window to play the game.
         /// </summary>
-        /// <param name="high">Highest number allowed for selected difficulty.</param>
-        /// <param name="questions">Number of questions to be generated.</param>
-        private void Addition(int high, int questions, bool practice = false)
+        /// <param name="gameType">What type of game is being played</param>
+        /// <param name="difficulty">Difficulty of game</param>
+        private void Play(string gameType, string difficulty)
         {
             QuestionWindow questionWindow = new QuestionWindow();
-            questionWindow.Addition(high, questions);
             questionWindow.Show();
+            questionWindow.LoadGame(gameType, difficulty);
             questionWindow.RefToMainWindow = this;
             this.Visibility = Visibility.Hidden;
         }
 
-        /// <summary>
-        /// Opens the Question Window for Subtraction questions.
-        /// </summary>
-        /// <param name="high">Highest number allowed for selected difficulty.</param>
-        /// <param name="questions">Number of questions to be generated.</param>
-        private void Subtraction(int high, int questions, bool practice = false)
+        #region Button-Click Methods
+
+        private void btnAchievements_Click(object sender, RoutedEventArgs e)
         {
-            QuestionWindow questionWindow = new QuestionWindow();
-            questionWindow.Subtraction(high, questions);
-            questionWindow.Show();
-            questionWindow.RefToMainWindow = this;
+            AchievementsWindow achievementsWindow = new AchievementsWindow();
+            achievementsWindow.RefToMainWindow = this;
+            achievementsWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
 
-        /// <summary>
-        /// Opens the Question Window for Multiplication questions.
-        /// </summary>
-        /// <param name="high">Highest number allowed for selected difficulty.</param>
-        /// <param name="questions">Number of questions to be generated.</param>
-        private void Multiplication(int high, int questions, bool practice = false)
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            QuestionWindow questionWindow = new QuestionWindow();
-            questionWindow.Multiplication(high, questions);
-            questionWindow.Show();
-            questionWindow.RefToMainWindow = this;
-            this.Visibility = Visibility.Hidden;
+            CloseWindow();
         }
 
-        /// <summary>
-        /// Opens the Question Window for Division questions.
-        /// </summary>
-        /// <param name="high">Highest number allowed for selected difficulty.</param>
-        /// <param name="questions">Number of questions to be generated.</param>
-        private void Division(int high, int questions, bool practice = false)
-        {
-            QuestionWindow questionWindow = new QuestionWindow();
-            questionWindow.Division(high, questions);
-            questionWindow.Show();
-            questionWindow.RefToMainWindow = this;
-            this.Visibility = Visibility.Hidden;
-        }
-
-        #endregion Math Methods
+        #endregion Button-Click Methods
 
         #region Addition Button-Click Methods
 
         private void btnAdditionPractice_Click(object sender, RoutedEventArgs e)
         {
-            Addition(30, 100, true);
+            Play("Addition", "Practice");
         }
 
         private void btnAdditionEasy_Click(object sender, RoutedEventArgs e)
         {
-            Addition(10, 10);
+            Play("Addition", "Easy");
         }
 
         private void btnAdditionMedium_Click(object sender, RoutedEventArgs e)
         {
-            Addition(20, 15);
+            Play("Addition", "Medium");
         }
 
         private void btnAdditionHard_Click(object sender, RoutedEventArgs e)
         {
-            Addition(30, 20);
+            Play("Addition", "Hard");
         }
 
         #endregion Addition Button-Click Methods
@@ -108,22 +68,22 @@ namespace MathGame_WPF
 
         private void btnSubtractionPractice_Click(object sender, RoutedEventArgs e)
         {
-            Subtraction(30, 100, true);
+            Play("Subtraction", "Practice");
         }
 
         private void btnSubtractionEasy_Click(object sender, RoutedEventArgs e)
         {
-            Subtraction(12, 10);
+            Play("Subtraction", "Easy");
         }
 
         private void btnSubtractionMedium_Click(object sender, RoutedEventArgs e)
         {
-            Subtraction(20, 15);
+            Play("Subtraction", "Medium");
         }
 
         private void btnSubtractionHard_Click(object sender, RoutedEventArgs e)
         {
-            Subtraction(30, 20);
+            Play("Subtraction", "Hard");
         }
 
         #endregion Subtraction Button-Click Methods
@@ -132,22 +92,22 @@ namespace MathGame_WPF
 
         private void btnMultiplicationPractice_Click(object sender, RoutedEventArgs e)
         {
-            Multiplication(15, 100, true);
+            Play("Multiplication", "Practice");
         }
 
         private void btnMultiplicationEasy_Click(object sender, RoutedEventArgs e)
         {
-            Multiplication(5, 10);
+            Play("Multiplication", "Easy");
         }
 
         private void btnMultiplicationMedium_Click(object sender, RoutedEventArgs e)
         {
-            Multiplication(10, 15);
+            Play("Multiplication", "Medium");
         }
 
         private void btnMultiplicationHard_Click(object sender, RoutedEventArgs e)
         {
-            Multiplication(15, 30);
+            Play("Multiplication", "Hard");
         }
 
         #endregion Multiplication Button-Click Methods
@@ -156,31 +116,44 @@ namespace MathGame_WPF
 
         private void btnDivisionPractice_Click(object sender, RoutedEventArgs e)
         {
-            Division(50, 100, true);
+            Play("Division", "Practice");
         }
 
         private void btnDivisionEasy_Click(object sender, RoutedEventArgs e)
         {
-            Division(20, 10);
+            Play("Division", "Easy");
         }
 
         private void btnDivisionMedium_Click(object sender, RoutedEventArgs e)
         {
-            Division(40, 15);
+            Play("Division", "Medium");
         }
 
         private void btnDivisionHard_Click(object sender, RoutedEventArgs e)
         {
-            Division(60, 20);
+            Play("Division", "Hard");
         }
 
         #endregion Division Button-Click Methods
 
         #region Window-Manipulation Methods
 
+        /// <summary>
+        /// Closes the Window.
+        /// </summary>
+        private void CloseWindow()
+        {
+            this.Close();
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void windowMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            RefToLoginWindow.Show();
         }
 
         #endregion Window-Manipulation Methods

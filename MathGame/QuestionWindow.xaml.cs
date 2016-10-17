@@ -1,32 +1,427 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace MathGame_WPF
+namespace MathGame
 {
     /// <summary>
     /// Interaction logic for QuestionWindow.xaml
     /// </summary>
-    public partial class QuestionWindow : Window
+    public partial class QuestionWindow : Window, INotifyPropertyChanged
     {
-        private List<Question> questionList = new List<Question>();
-        private string operation = "";
-        private int questionIndex = 0;
-        private int attemptsRemaining = 3;
-        private int score = 0;
-        private bool questionDone = false;
+        private List<Question> _questionList = new List<Question>();
+        private int _questionIndex = 0, _attemptsRemaining = 0, _score = 0;
+        private bool _questionDone = false;
+        private string _gameType = "", _difficulty = "", _comment = "";
+        private Question SelectedQuestion = new Question();
+
+        #region Properties
 
         internal MainWindow RefToMainWindow { get; set; }
+
+        public bool QuestionDone
+        {
+            get
+            {
+                return _questionDone;
+            }
+
+            set
+            {
+                _questionDone = value;
+            }
+        }
+
+        public string GameType
+        {
+            get { return _gameType; }
+            set { _gameType = value; OnPropertyChanged("GameType"); }
+        }
+
+        public string Difficulty
+        {
+            get { return _difficulty; }
+            set { _difficulty = value; OnPropertyChanged("Difficulty"); }
+        }
+
+        public int Score
+        {
+            get { return _score; }
+            set { _score = value; OnPropertyChanged("ScoreToString"); }
+        }
+
+        public string ScoreToString
+        {
+            get { return Score.ToString("N0"); }
+        }
+
+        public int AttemptsRemaining
+        {
+            get { return _attemptsRemaining; }
+            set { _attemptsRemaining = value; OnPropertyChanged("AttemptsRemaining"); OnPropertyChanged("AttemptsRemainingToString"); }
+        }
+
+        public string AttemptsRemainingToString
+        {
+            get { return AttemptsRemaining.ToString("N0"); }
+        }
+
+        public int QuestionIndex
+        {
+            get { return _questionIndex; }
+            set { _questionIndex = value; OnPropertyChanged("QuestionsRemaining"); }
+        }
+
+        public string QuestionsRemaining
+        {
+            get { return (QuestionList.Count - QuestionIndex - 1).ToString("N0"); }
+        }
+
+        internal List<Question> QuestionList
+        {
+            get { return _questionList; }
+            set { _questionList = value; OnPropertyChanged("QuestionList"); }
+        }
+
+        public string Comment
+        {
+            get { return _comment; }
+            set { _comment = value; OnPropertyChanged("Comment"); }
+        }
+
+        #endregion Properties
+
+        #region Data-Binding
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Binds information to controls.
+        /// </summary>
+        private void BindLabels()
+        {
+            DataContext = this;
+            lblQuestion.DataContext = SelectedQuestion;
+        }
+
+        protected virtual void OnPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        #endregion Data-Binding
+
+        #region Achievement-Manipulation
+
+        /// <summary>
+        /// Checks all Achievements.
+        /// </summary>
+        private void CheckAllAchievements()
+        {
+            CheckAchievements();
+            CheckGeneralAchievements();
+        }
+
+        /// <summary>
+        /// Checks general Achievements.
+        /// </summary>
+        private void CheckGeneralAchievements()
+        {
+            switch (GameState.CurrentPlayer.TotalWins)
+            {
+                case 1:
+                    EarnAchievement("First Game");
+                    break;
+
+                case 10:
+                    EarnAchievement("10 Wins");
+                    break;
+
+                case 25:
+
+                    EarnAchievement("25 Wins");
+                    break;
+
+                case 50:
+
+                    EarnAchievement("50 Wins");
+                    break;
+
+                case 100:
+                    EarnAchievement("100 Wins");
+                    break;
+
+                case 250:
+                    EarnAchievement("250 Wins");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Checks Achievements for this game type.
+        /// </summary>
+        private void CheckAchievements()
+        {
+            switch (GameType)
+            {
+                case "Addition":
+                    switch (Difficulty)
+                    {
+                        case "Easy":
+                            GameState.CurrentPlayer.EasyAdditionWins += 1;
+                            if (GameState.CurrentPlayer.EasyAdditionWins == 5)
+                                EarnAchievement("5 Easy Addition Wins");
+                            else if (GameState.CurrentPlayer.EasyAdditionWins == 20)
+                                EarnAchievement("20 Easy Addition Wins");
+
+                            break;
+
+                        case "Medium":
+                            GameState.CurrentPlayer.MediumAdditionWins += 1;
+                            if (GameState.CurrentPlayer.MediumAdditionWins == 5)
+                                EarnAchievement("5 Medium Addition Wins");
+                            else if (GameState.CurrentPlayer.MediumAdditionWins == 20)
+                                EarnAchievement("20 Medium Addition Wins");
+                            break;
+
+                        case "Hard":
+                            GameState.CurrentPlayer.HardAdditionWins += 1;
+                            if (GameState.CurrentPlayer.MediumAdditionWins == 5)
+                                EarnAchievement("5 Medium Addition Wins");
+                            else if (GameState.CurrentPlayer.MediumAdditionWins == 20)
+                                EarnAchievement("20 Medium Addition Wins");
+
+                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Addition")))
+                                EarnAchievement("Perfect Game Hard Addition");
+                            break;
+                    }
+                    break;
+
+                case "Subtraction":
+                    switch (Difficulty)
+                    {
+                        case "Easy":
+                            if (GameState.CurrentPlayer.EasySubtractionWins == 5)
+                                EarnAchievement("5 Easy Subtraction Wins");
+                            else if (GameState.CurrentPlayer.EasySubtractionWins == 20)
+                                EarnAchievement("20 Easy Subtraction Wins");
+
+                            break;
+
+                        case "Medium":
+                            if (GameState.CurrentPlayer.MediumSubtractionWins == 5)
+                                EarnAchievement("5 Medium Subtraction Wins");
+                            else if (GameState.CurrentPlayer.MediumSubtractionWins == 20)
+                                EarnAchievement("20 Medium Subtraction Wins");
+                            break;
+
+                        case "Hard":
+                            GameState.CurrentPlayer.HardAdditionWins += 1;
+                            if (GameState.CurrentPlayer.HardSubtractionWins == 5)
+                                EarnAchievement("5 Hard Subtraction Wins");
+                            else if (GameState.CurrentPlayer.HardSubtractionWins == 20)
+                                EarnAchievement("20 Hard Subtraction Wins");
+
+                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Subtraction")))
+                                EarnAchievement("Perfect Game Hard Subtraction");
+                            break;
+                    }
+                    break;
+
+                case "Multiplication":
+                    switch (Difficulty)
+                    {
+                        case "Easy":
+                            if (GameState.CurrentPlayer.EasyMultiplicationWins == 5)
+                                EarnAchievement("5 Easy Multiplication Wins");
+                            else if (GameState.CurrentPlayer.EasyMultiplicationWins == 20)
+                                EarnAchievement("20 Easy Multiplication Wins");
+
+                            break;
+
+                        case "Medium":
+                            if (GameState.CurrentPlayer.MediumMultiplicationWins == 5)
+                                EarnAchievement("5 Medium Multiplication Wins");
+                            else if (GameState.CurrentPlayer.MediumMultiplicationWins == 20)
+                                EarnAchievement("20 Medium Multiplication Wins");
+                            break;
+
+                        case "Hard":
+                            if (GameState.CurrentPlayer.HardMultiplicationWins == 5)
+                                EarnAchievement("5 Hard Multiplication Wins");
+                            else if (GameState.CurrentPlayer.HardMultiplicationWins == 20)
+                                EarnAchievement("20 Hard Multiplication Wins");
+
+                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Multiplication")))
+                                EarnAchievement("Perfect Game Hard Multiplication");
+                            break;
+                    }
+                    break;
+
+                case "Division":
+                    switch (Difficulty)
+                    {
+                        case "Easy":
+                            if (GameState.CurrentPlayer.EasyDivisionWins == 5)
+                                EarnAchievement("5 Easy Division Wins");
+                            else if (GameState.CurrentPlayer.EasyDivisionWins == 20)
+                                EarnAchievement("20 Easy Division Wins");
+
+                            break;
+
+                        case "Medium":
+                            if (GameState.CurrentPlayer.MediumDivisionWins == 5)
+                                EarnAchievement("5 Medium Division Wins");
+                            else if (GameState.CurrentPlayer.MediumDivisionWins == 20)
+                                EarnAchievement("20 Medium Division Wins");
+                            break;
+
+                        case "Hard":
+                            if (GameState.CurrentPlayer.HardDivisionWins == 5)
+                                EarnAchievement("5 Hard Division Wins");
+                            else if (GameState.CurrentPlayer.HardDivisionWins == 20)
+                                EarnAchievement("20 Hard Division Wins");
+
+                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Division")))
+                                EarnAchievement("Perfect Game Hard Division");
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Earns the Player an achievement.
+        /// </summary>
+        private void EarnAchievement(string achievementName)
+        {
+            GameState.CurrentPlayer.UnlockedAchievements.Add(new Achievement(GameState.AllAchievements.Find(ach => ach.Name == achievementName)));
+            NewAchievementWindow newAchievementWindow = new NewAchievementWindow();
+            newAchievementWindow.LoadAchievement(GameState.AllAchievements.Find(ach => ach.Name == achievementName));
+            newAchievementWindow.Show();
+        }
+
+        #endregion Achievement-Manipulation
+
+        /// <summary>
+        /// Loads the game.
+        /// </summary>
+        /// <param name="mathType">What math operation to use</param>
+        /// <param name="difficulty">Difficulty of game</param>
+        internal void LoadGame(string mathType, string difficulty)
+        {
+            GameType = mathType;
+            Difficulty = difficulty;
+            switch (GameType)
+            {
+                case "Addition":
+                    switch (Difficulty)
+                    {
+                        case "Practice":
+                            Addition(30, 100);
+                            break;
+
+                        case "Easy":
+                            Addition(10, 10);
+                            break;
+
+                        case "Medium":
+                            Addition(20, 15);
+                            break;
+
+                        case "Hard":
+                            Addition(30, 20);
+                            break;
+                    }
+                    break;
+
+                case "Subtraction":
+                    switch (Difficulty)
+                    {
+                        case "Practice":
+                            Subtraction(30, 100);
+                            break;
+
+                        case "Easy":
+                            Subtraction(12, 10);
+                            break;
+
+                        case "Medium":
+                            Subtraction(20, 15);
+                            break;
+
+                        case "Hard":
+                            Subtraction(30, 20);
+                            break;
+                    }
+                    break;
+
+                case "Multiplication":
+                    switch (Difficulty)
+                    {
+                        case "Practice":
+                            Multiplication(15, 100);
+                            break;
+
+                        case "Easy":
+                            Multiplication(5, 10);
+                            break;
+
+                        case "Medium":
+                            Multiplication(10, 15);
+                            break;
+
+                        case "Hard":
+                            Multiplication(15, 30);
+                            break;
+                    }
+                    break;
+
+                case "Division":
+                    switch (Difficulty)
+                    {
+                        case "Practice":
+                            Division(50, 100);
+                            break;
+
+                        case "Easy":
+                            Division(20, 10);
+                            break;
+
+                        case "Medium":
+                            Division(40, 15);
+                            break;
+
+                        case "Hard":
+                            Division(60, 20);
+                            break;
+                    }
+                    break;
+            }
+
+            switch (Difficulty)
+            {
+                case "Practice":
+                    AttemptsRemaining = 100;
+                    break;
+
+                case "Easy":
+                    AttemptsRemaining = 6;
+                    break;
+
+                case "Medium":
+                    AttemptsRemaining = 4;
+                    break;
+
+                case "Hard":
+                    AttemptsRemaining = 3;
+                    break;
+            }
+
+            SelectedQuestion = QuestionList[QuestionIndex];
+            BindLabels();
+            Display();
+        }
 
         #region Math Methods
 
@@ -35,10 +430,8 @@ namespace MathGame_WPF
         /// </summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
-        internal void Addition(int high, int questions)
+        private void Addition(int high, int questions)
         {
-            operation = " + ";
-
             for (int i = 0; i < questions; i++)
             {
                 int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
@@ -55,10 +448,8 @@ namespace MathGame_WPF
                 }
 
                 possibleAnswers.Shuffle();
-                questionList.Add(new Question(int1, int2, correctAnswer, possibleAnswers));
+                QuestionList.Add(new Question(int1, int2, " + ", correctAnswer, possibleAnswers));
             }
-
-            Display();
         }
 
         /// <summary>
@@ -66,10 +457,8 @@ namespace MathGame_WPF
         /// </summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
-        internal void Subtraction(int high, int questions)
+        private void Subtraction(int high, int questions)
         {
-            operation = " - ";
-
             for (int i = 0; i < questions; i++)
             {
                 int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
@@ -87,10 +476,8 @@ namespace MathGame_WPF
                 }
 
                 possibleAnswers.Shuffle();
-                questionList.Add(new Question(int1, int2, correctAnswer, possibleAnswers));
+                QuestionList.Add(new Question(int1, int2, " - ", correctAnswer, possibleAnswers));
             }
-
-            Display();
         }
 
         /// <summary>
@@ -98,10 +485,8 @@ namespace MathGame_WPF
         /// </summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
-        internal void Multiplication(int high, int questions)
+        private void Multiplication(int high, int questions)
         {
-            operation = " * ";
-
             for (int i = 0; i < questions; i++)
             {
                 int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
@@ -119,10 +504,8 @@ namespace MathGame_WPF
                 }
 
                 possibleAnswers.Shuffle();
-                questionList.Add(new Question(int1, int2, correctAnswer, possibleAnswers));
+                QuestionList.Add(new Question(int1, int2, " * ", correctAnswer, possibleAnswers));
             }
-
-            Display();
         }
 
         /// <summary>
@@ -130,10 +513,8 @@ namespace MathGame_WPF
         /// </summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
-        internal void Division(int high, int questions)
+        private void Division(int high, int questions)
         {
-            operation = " / ";
-
             for (int i = 0; i < questions; i++)
             {
                 int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
@@ -156,10 +537,8 @@ namespace MathGame_WPF
                 }
 
                 possibleAnswers.Shuffle();
-                questionList.Add(new Question(int1, int2, correctAnswer, possibleAnswers));
+                QuestionList.Add(new Question(int1, int2, " / ", correctAnswer, possibleAnswers));
             }
-
-            Display();
         }
 
         #endregion Math Methods
@@ -182,7 +561,7 @@ namespace MathGame_WPF
         /// </summary>
         private void DisableButtions()
         {
-            questionDone = true;
+            QuestionDone = true;
             btnCheck.IsEnabled = false;
             btnNext.IsEnabled = false;
             btnNewGame.IsEnabled = true;
@@ -193,33 +572,23 @@ namespace MathGame_WPF
         /// </summary>
         private void Display()
         {
-            DisplayStatistics();
-            DisplayQuestion();
-        }
-
-        /// <summary>
-        /// Displays the statistics.
-        /// </summary>
-        private void DisplayStatistics()
-        {
-            lblScore.Text = score.ToString("N0");
-            lblAttempts.Text = attemptsRemaining.ToString("N0");
-            lblQuestionsRemaining.Text = (questionList.Count - 1 - questionIndex).ToString();
+            DisplayPossibleAnswers();
         }
 
         /// <summary>
         /// Displays the question and possible answers.
         /// </summary>
-        private void DisplayQuestion()
+        private void DisplayPossibleAnswers()
         {
-            lblQuestion.Text = questionList[questionIndex].Int1.ToString("N0") + operation + questionList[questionIndex].Int2.ToString("N0");
-            radA.Content = questionList[questionIndex].PossibleSolutions[0].ToString("N0");
-            radB.Content = questionList[questionIndex].PossibleSolutions[1].ToString("N0");
-            radC.Content = questionList[questionIndex].PossibleSolutions[2].ToString("N0");
-            radD.Content = questionList[questionIndex].PossibleSolutions[3].ToString("N0");
+            radA.Content = SelectedQuestion.PossibleSolutions[0].ToString("N0");
+            radB.Content = SelectedQuestion.PossibleSolutions[1].ToString("N0");
+            radC.Content = SelectedQuestion.PossibleSolutions[2].ToString("N0");
+            radD.Content = SelectedQuestion.PossibleSolutions[3].ToString("N0");
         }
 
         #endregion Display-Manipulation Methods
+
+        #region Question Results
 
         /// <summary>
         /// Check whether the selected radio button is the correct answer.
@@ -227,28 +596,30 @@ namespace MathGame_WPF
         /// <param name="radChecked">Which radio button is checked</param>
         private void CheckCorrect(int radChecked)
         {
-            if (questionList[questionIndex].Solution == questionList[questionIndex].PossibleSolutions[radChecked])
+            if (QuestionList[QuestionIndex].Solution == QuestionList[QuestionIndex].PossibleSolutions[radChecked])
                 Correct();
             else
                 Incorrect();
         }
-
-        #region Question Results
 
         /// <summary>
         /// You got the question correct.
         /// </summary>
         private void Correct()
         {
-            questionDone = true;
-            score += 10;
+            QuestionDone = true;
+            Score += 10;
             btnCheck.IsEnabled = false;
-            if (questionIndex != questionList.Count - 1)
+            if (QuestionIndex != QuestionList.Count - 1)
                 btnNext.IsEnabled = true;
             else
+            {
                 btnNewGame.IsEnabled = true;
-            DisplayStatistics();
-            lblComment.Text = "Good job!";
+                GameState.CurrentPlayer.TotalWins += 1;
+                CheckAllAchievements();
+            }
+
+            Comment = "Good job!";
         }
 
         /// <summary>
@@ -256,14 +627,13 @@ namespace MathGame_WPF
         /// </summary>
         private void Incorrect()
         {
-            attemptsRemaining--;
-            score -= 5;
-            DisplayStatistics();
-            if (attemptsRemaining > 0)
+            AttemptsRemaining--;
+            Score -= 5;
+            if (AttemptsRemaining > 0)
                 lblComment.Text = "Incorrect. Try again.";
             else
             {
-                lblComment.Text = "You lose!";
+                lblComment.Text = "Incorrect. You lose!";
                 DisableButtions();
             }
         }
@@ -291,10 +661,12 @@ namespace MathGame_WPF
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            questionIndex++;
-            questionDone = false;
+            QuestionIndex++;
+            SelectedQuestion = QuestionList[QuestionIndex];
+            lblQuestion.DataContext = SelectedQuestion;
+            QuestionDone = false;
             Display();
-            lblComment.Text = "";
+            Comment = "";
             btnNext.IsEnabled = false;
             ClearChecked();
         }
@@ -313,7 +685,7 @@ namespace MathGame_WPF
         /// </summary>
         private void CheckedChanged(object sender, RoutedEventArgs e)
         {
-            if (!questionDone)
+            if (!QuestionDone)
             {
                 if (radA.IsChecked == true || radB.IsChecked == true || radC.IsChecked == true || radD.IsChecked == true)
                     btnCheck.IsEnabled = true;
@@ -325,11 +697,13 @@ namespace MathGame_WPF
         public QuestionWindow()
         {
             InitializeComponent();
+            ClearChecked();
         }
 
         private void windowQuestion_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             RefToMainWindow.Show();
+            GameState.SavePlayer();
         }
 
         #endregion Window-Manipulation Methods
