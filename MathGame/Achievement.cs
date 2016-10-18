@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace MathGame
 {
-    internal class Achievement : INotifyPropertyChanged
+    internal class Achievement : INotifyPropertyChanged, IEquatable<Achievement>
     {
         private string _name, _description, _type;
         private int _points;
@@ -67,6 +68,58 @@ namespace MathGame
         }
 
         #endregion Data Binding
+
+        #region Override Operators
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Achievement ach = obj as Achievement;
+            if ((System.Object)ach == null)
+                return false;
+
+            return (this.Name == ach.Name) && (this.Description == ach.Description) && (this.Type == ach.Type) && (this.Points == ach.Points);
+        }
+
+        public bool Equals(Achievement otherAchievement)
+        {
+            if ((object)otherAchievement == null)
+                return false;
+
+            return (this.Name == otherAchievement.Name) && (this.Description == otherAchievement.Description) && (this.Type == otherAchievement.Type) && (this.Points == otherAchievement.Points);
+        }
+
+        public static bool operator ==(Achievement left, Achievement right)
+        {
+            if (System.Object.ReferenceEquals(left, right))
+                return true;
+
+            if (((object)left == null) || ((object)right == null))
+                return false;
+
+            return (left.Name == right.Name) && (left.Description == right.Description) && (left.Type == right.Type) && (left.Points == right.Points);
+        }
+
+        public static bool operator !=(Achievement left, Achievement right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode() ^ 17;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Override Operators
 
         #region Constructors
 
