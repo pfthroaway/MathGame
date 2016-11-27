@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,8 +29,8 @@ namespace MathGame
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            OleDbConnection con = new OleDbConnection();
-            OleDbDataAdapter da = new OleDbDataAdapter();
+            SQLiteConnection con = new SQLiteConnection();
+            SQLiteDataAdapter da = new SQLiteDataAdapter();
             DataSet ds = new DataSet();
             con.ConnectionString = GameState._DBPROVIDERANDSOURCE;
             string username = txtUsername.Text;
@@ -42,7 +42,7 @@ namespace MathGame
                 {
                     string sql = "SELECT * FROM Players WHERE [Username] ='" + username + "'";
                     string table = "Players";
-                    da = new OleDbDataAdapter(sql, con);
+                    da = new SQLiteDataAdapter(sql, con);
                     da.Fill(ds, table);
                 }
                 catch (Exception ex)

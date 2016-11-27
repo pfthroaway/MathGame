@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SQLite;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -9,14 +9,14 @@ namespace MathGame
 {
     internal class GameState
     {
-        internal const string _DBPROVIDERANDSOURCE = "Provider=Microsoft.ACE.oledb.12.0;Data Source = MathGame.accdb";
+        internal const string _DBPROVIDERANDSOURCE = "Data Source = MathGame.sqlite;Version=3";
         internal static Player CurrentPlayer = new Player();
         internal static List<Achievement> AllAchievements = new List<Achievement>();
 
         internal static async void LoadAll()
         {
-            OleDbConnection con = new OleDbConnection();
-            OleDbDataAdapter da = new OleDbDataAdapter();
+            SQLiteConnection con = new SQLiteConnection();
+            SQLiteDataAdapter da = new SQLiteDataAdapter();
             DataSet ds = new DataSet();
             con.ConnectionString = _DBPROVIDERANDSOURCE;
 
@@ -25,9 +25,8 @@ namespace MathGame
                 try
                 {
                     string sql = "SELECT * FROM Achievements";
-                    string table = "Achievements";
-                    da = new OleDbDataAdapter(sql, con);
-                    da.Fill(ds, table);
+                    da = new SQLiteDataAdapter(sql, con);
+                    da.Fill(ds, "Achievements");
 
                     if (ds.Tables[0].Rows.Count > 0)
                     {
@@ -52,8 +51,8 @@ namespace MathGame
         /// </summary>
         internal static async void SavePlayer()
         {
-            OleDbCommand cmd = new OleDbCommand();
-            OleDbConnection con = new OleDbConnection();
+            SQLiteCommand cmd = new SQLiteCommand();
+            SQLiteConnection con = new SQLiteConnection();
             con.ConnectionString = _DBPROVIDERANDSOURCE;
             string sql = "UPDATE Players SET [AchievementsUnlocked] = @achievementsUnlocked,[TotalWins] = @totalWins,[EasyAdditionWins] = @easyAdditionWins,[MediumAdditionWins] = @mediumAdditionWins,[HardAdditionWins] = @hardAdditionWins,[EasySubtractionWins] = @easySubtractionWins,[MediumSubtractionWins] = @mediumSubtractionWins,[HardSubtractionWins] = @hardSubtractionWins,[EasyMultiplicationWins] = @easyMultiplicationWins,[MediumMultiplicationWins] = @mediumMultiplicationWins,[HardMultiplicationWins] = @hardMultiplicationWins,[EasyDivisionWins] = @easyDivisionWins,[MediumDivisionWins] = @mediumDivisionWins,[HardDivisionWins] = @hardDivisionWins WHERE [Username] = @username";
 

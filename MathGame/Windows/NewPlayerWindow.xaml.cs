@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
+using System.Data.SQLite;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,8 +33,8 @@ namespace MathGame
             if (pswdPassword.Password == pswdConfirmPassword.Password)
             {
                 string username = txtUsername.Text;
-                OleDbConnection con = new OleDbConnection();
-                OleDbDataAdapter da = new OleDbDataAdapter();
+                SQLiteConnection con = new SQLiteConnection();
+                SQLiteDataAdapter da = new SQLiteDataAdapter();
                 DataSet ds = new DataSet();
                 con.ConnectionString = GameState._DBPROVIDERANDSOURCE;
 
@@ -44,7 +44,7 @@ namespace MathGame
                     {
                         string sql = "SELECT * FROM Players WHERE [Username] ='" + username + "'";
                         string table = "Players";
-                        da = new OleDbDataAdapter(sql, con);
+                        da = new SQLiteDataAdapter(sql, con);
                         da.Fill(ds, table);
                     }
                     catch (Exception ex)
@@ -61,7 +61,7 @@ namespace MathGame
                 else
                 {
                     string hashedPassword = PasswordHash.HashPassword(pswdPassword.Password);
-                    OleDbCommand cmd = con.CreateCommand();
+                    SQLiteCommand cmd = con.CreateCommand();
                     cmd.CommandText = "INSERT INTO Players([Username],[UserPassword])Values(@username,@hashedPassword)";
 
                     cmd.Parameters.AddWithValue("@username", username);

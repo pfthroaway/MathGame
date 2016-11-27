@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MathGame"
         mc:Ignorable="d"
         Title="Math Game" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Math.ico" Closing="windowMain_Closing">
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="10,10,0,10">
+        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="0,0,0,10">
             <StackPanel>
                 <TextBlock Text="Addition" Margin="10" TextAlignment="Center" />
                 <Button x:Name="btnAdditionPractice" Width="125" Height="30" Content="Practice" Margin="10" Click="btnAdditionPractice_Click" />
@@ -26,7 +26,7 @@
                 <Button x:Name="btnAdditionHard" Width="125" Height="30" Content="Hard" Margin="10" Click="btnAdditionHard_Click" />
             </StackPanel>
         </Border>
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="0,10,0,10">
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="0,0,0,10">
             <StackPanel>
                 <TextBlock Text="Subtraction" Margin="10" TextAlignment="Center" />
                 <Button x:Name="btnSubtractionPractice" Width="125" Height="30" Content="Practice" Margin="10" Click="btnSubtractionPractice_Click" />
@@ -35,7 +35,7 @@
                 <Button x:Name="btnSubtractionHard" Width="125" Height="30" Content="Hard" Margin="10" Click="btnSubtractionHard_Click" />
             </StackPanel>
         </Border>
-        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="0,10,0,10">
+        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,0,1" Margin="0,0,0,10">
             <StackPanel>
                 <TextBlock Text="Multiplication" Margin="10" TextAlignment="Center" />
                 <Button x:Name="btnMultiplicationPractice" Width="125" Height="30" Content="Practice" Margin="10" Click="btnMultiplicationPractice_Click" />
@@ -44,7 +44,7 @@
                 <Button x:Name="btnMultiplicationHard" Width="125" Height="30" Content="Hard" Margin="10" Click="btnMultiplicationHard_Click" />
             </StackPanel>
         </Border>
-        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" Margin="0,10,10,10">
+        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,10">
             <StackPanel>
                 <TextBlock Text="Division" Margin="10" TextAlignment="Center" />
                 <Button x:Name="btnDivisionPractice" Width="125" Height="30" Content="Practice" Margin="10" Click="btnDivisionPractice_Click" />
@@ -53,11 +53,7 @@
                 <Button x:Name="btnDivisionHard" Width="125" Height="30" Content="Hard" Margin="10" Click="btnDivisionHard_Click" />
             </StackPanel>
         </Border>
-        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,1,0,1" Margin="10,0,0,10">
-            <Button x:Name="btnAchievements" Width="125" Height="30" Content="_Achievements" Click="btnAchievements_Click" />
-        </Border>
-        <Border Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="White" BorderThickness="1,1,0,1" Margin="0,0,10,10">
-            <Button x:Name="btnBack" Width="125" Height="30" Content="_Back" Click="btnBack_Click" IsCancel="True" />
-        </Border>
+        <Button x:Name="btnAchievements" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="125" Height="30" Content="_Achievements" Click="btnAchievements_Click" />
+        <Button x:Name="btnBack" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Width="125" Height="30" Content="_Back" Click="btnBack_Click" IsCancel="True" />
     </Grid>
 </Window>
