@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +12,7 @@ namespace MathGame
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class LoginWindow
     {
         private List<Achievement> LoadAchievements(string achievements)
         {
@@ -30,7 +30,7 @@ namespace MathGame
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             SQLiteConnection con = new SQLiteConnection();
-            SQLiteDataAdapter da = new SQLiteDataAdapter();
+            SQLiteDataAdapter da;
             DataSet ds = new DataSet();
             con.ConnectionString = GameState._DBPROVIDERANDSOURCE;
             string username = txtUsername.Text;
@@ -47,7 +47,7 @@ namespace MathGame
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Filling DataSet", MessageBoxButton.OK);
+                    new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK, this).ShowDialog();
                 }
                 finally { con.Close(); }
             });
@@ -77,22 +77,20 @@ namespace MathGame
                     txtUsername.Clear();
                     pswdPassword.Clear();
                     txtUsername.Focus();
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.RefToLoginWindow = this;
+                    MainWindow mainWindow = new MainWindow { RefToLoginWindow = this };
                     mainWindow.Show();
                     this.Visibility = Visibility.Hidden;
                 }
                 else
-                    MessageBox.Show("Invalid login", "MathGame", MessageBoxButton.OK);
+                    new Notification("Invalid login", "MathGame", NotificationButtons.OK, this).ShowDialog();
             }
             else
-                MessageBox.Show("Invalid login", "MathGame", MessageBoxButton.OK);
+                new Notification("Invalid login", "MathGame", NotificationButtons.OK, this).ShowDialog();
         }
 
         private void btnNewPlayer_Click(object sender, RoutedEventArgs e)
         {
-            NewPlayerWindow newPlayerWindow = new NewPlayerWindow();
-            newPlayerWindow.RefToLoginWindow = this;
+            NewPlayerWindow newPlayerWindow = new NewPlayerWindow { RefToLoginWindow = this };
             newPlayerWindow.Show();
             this.Visibility = Visibility.Hidden;
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Extensions;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 
@@ -7,30 +8,18 @@ namespace MathGame
     /// <summary>
     /// Interaction logic for QuestionWindow.xaml
     /// </summary>
-    public partial class QuestionWindow : Window, INotifyPropertyChanged
+    public partial class QuestionWindow : INotifyPropertyChanged
     {
         private List<Question> _questionList = new List<Question>();
-        private int _questionIndex = 0, _attemptsRemaining = 0, _score = 0;
-        private bool _questionDone = false;
-        private string _gameType = "", _difficulty = "", _comment = "";
+        private int _questionIndex, _attemptsRemaining, _score;
+        private string _gameType, _difficulty, _comment;
         private Question SelectedQuestion = new Question();
 
         #region Properties
 
         internal MainWindow RefToMainWindow { get; set; }
 
-        public bool QuestionDone
-        {
-            get
-            {
-                return _questionDone;
-            }
-
-            set
-            {
-                _questionDone = value;
-            }
-        }
+        public bool QuestionDone { get; set; }
 
         public string GameType
         {
@@ -50,10 +39,7 @@ namespace MathGame
             set { _score = value; OnPropertyChanged("ScoreToString"); }
         }
 
-        public string ScoreToString
-        {
-            get { return Score.ToString("N0"); }
-        }
+        public string ScoreToString => Score.ToString("N0");
 
         public int AttemptsRemaining
         {
@@ -61,10 +47,7 @@ namespace MathGame
             set { _attemptsRemaining = value; OnPropertyChanged("AttemptsRemaining"); OnPropertyChanged("AttemptsRemainingToString"); }
         }
 
-        public string AttemptsRemainingToString
-        {
-            get { return AttemptsRemaining.ToString("N0"); }
-        }
+        public string AttemptsRemainingToString => AttemptsRemaining.ToString("N0");
 
         public int QuestionIndex
         {
@@ -72,10 +55,7 @@ namespace MathGame
             set { _questionIndex = value; OnPropertyChanged("QuestionsRemaining"); }
         }
 
-        public string QuestionsRemaining
-        {
-            get { return (QuestionList.Count - QuestionIndex - 1).ToString("N0"); }
-        }
+        public string QuestionsRemaining => (QuestionList.Count - QuestionIndex - 1).ToString("N0");
 
         internal List<Question> QuestionList
         {
@@ -437,8 +417,7 @@ namespace MathGame
                 int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
                 int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
                 int correctAnswer = int1 + int2;
-                List<int> possibleAnswers = new List<int>();
-                possibleAnswers.Add(correctAnswer);
+                List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
                     int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high, high * 2);
@@ -465,8 +444,7 @@ namespace MathGame
                 int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high / 2);
 
                 int correctAnswer = int1 - int2;
-                List<int> possibleAnswers = new List<int>();
-                possibleAnswers.Add(correctAnswer);
+                List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
                     int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
@@ -493,8 +471,7 @@ namespace MathGame
                 int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
 
                 int correctAnswer = int1 * int2;
-                List<int> possibleAnswers = new List<int>();
-                possibleAnswers.Add(correctAnswer);
+                List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
                     int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high * high);
@@ -526,8 +503,7 @@ namespace MathGame
                     int2 = ThreadSafeRandom.ThisThreadsRandom.Next(2, int1 - 2);
                 }
                 int correctAnswer = int1 / int2;
-                List<int> possibleAnswers = new List<int>();
-                possibleAnswers.Add(correctAnswer);
+                List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
                     int intNextAnswer = ThreadSafeRandom.ThisThreadsRandom.Next(2, high - 2);
@@ -700,7 +676,7 @@ namespace MathGame
             ClearChecked();
         }
 
-        private void windowQuestion_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowQuestion_Closing(object sender, CancelEventArgs e)
         {
             RefToMainWindow.Show();
             GameState.SavePlayer();

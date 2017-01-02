@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -11,7 +12,7 @@ namespace MathGame
     /// <summary>
     /// Interaction logic for NewPlayerWindow.xaml
     /// </summary>
-    public partial class NewPlayerWindow : Window
+    public partial class NewPlayerWindow
     {
         internal LoginWindow RefToLoginWindow { get; set; }
 
@@ -34,7 +35,7 @@ namespace MathGame
             {
                 string username = txtUsername.Text;
                 SQLiteConnection con = new SQLiteConnection();
-                SQLiteDataAdapter da = new SQLiteDataAdapter();
+                SQLiteDataAdapter da;
                 DataSet ds = new DataSet();
                 con.ConnectionString = GameState._DBPROVIDERANDSOURCE;
 
@@ -49,14 +50,14 @@ namespace MathGame
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Error Filling DataSet", MessageBoxButton.OK);
+                        new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK, this).ShowDialog();
                     }
                     finally { con.Close(); }
                 });
 
                 if (ds.Tables[0].Rows.Count > 0)
                 {
-                    MessageBox.Show("This username has been taken. Please choose another.", "Math Game", MessageBoxButton.OK);
+                    new Notification("This username has been taken. Please choose another.", "Math Game", NotificationButtons.OK, this).ShowDialog();
                 }
                 else
                 {
@@ -70,15 +71,14 @@ namespace MathGame
                     cmd.Connection = con;
                     cmd.ExecuteNonQuery();
                     GameState.CurrentPlayer = new Player(username, hashedPassword, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<Achievement>());
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.RefToLoginWindow = RefToLoginWindow;
+                    MainWindow mainWindow = new MainWindow { RefToLoginWindow = RefToLoginWindow };
                     mainWindow.Show();
                     this.Visibility = Visibility.Hidden;
                 }
             }
             else
             {
-                MessageBox.Show("Please ensure that the entered passwords match.", "MathGame", MessageBoxButton.OK);
+                new Notification("Please ensure that the entered passwords match.", "MathGame", NotificationButtons.OK, this).ShowDialog();
             }
         }
 

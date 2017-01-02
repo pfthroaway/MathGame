@@ -8,12 +8,12 @@ namespace MathGame
     /// <summary>
     /// Interaction logic for AchievementsWindow.xaml
     /// </summary>
-    public partial class AchievementsWindow : Window, INotifyPropertyChanged
+    public partial class AchievementsWindow : INotifyPropertyChanged
     {
         internal MainWindow RefToMainWindow { get; set; }
         private Achievement selectedUnlocked = new Achievement();
         private Achievement selectedLocked = new Achievement();
-        private List<Achievement> lockedAchievements = new List<Achievement>(GameState.AllAchievements);
+        private readonly List<Achievement> lockedAchievements = new List<Achievement>(GameState.AllAchievements);
 
         #region Data-Binding
 
@@ -88,7 +88,7 @@ namespace MathGame
             lblPointsUnlocked.DataContext = selectedUnlocked;
         }
 
-        private void windowAchievements_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowAchievements_Closing(object sender, CancelEventArgs e)
         {
             RefToMainWindow.Show();
         }

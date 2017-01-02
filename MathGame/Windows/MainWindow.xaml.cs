@@ -5,7 +5,7 @@ namespace MathGame
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         internal LoginWindow RefToLoginWindow { get; set; }
 
@@ -27,8 +27,7 @@ namespace MathGame
 
         private void btnAchievements_Click(object sender, RoutedEventArgs e)
         {
-            AchievementsWindow achievementsWindow = new AchievementsWindow();
-            achievementsWindow.RefToMainWindow = this;
+            AchievementsWindow achievementsWindow = new AchievementsWindow { RefToMainWindow = this };
             achievementsWindow.Show();
             this.Visibility = Visibility.Hidden;
         }

@@ -73,13 +73,8 @@ namespace MathGame
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-
             Achievement ach = obj as Achievement;
-            if ((System.Object)ach == null)
+            if ((object)ach == null)
                 return false;
 
             return (this.Name == ach.Name) && (this.Description == ach.Description) && (this.Type == ach.Type) && (this.Points == ach.Points);
@@ -95,7 +90,7 @@ namespace MathGame
 
         public static bool operator ==(Achievement left, Achievement right)
         {
-            if (System.Object.ReferenceEquals(left, right))
+            if (ReferenceEquals(left, right))
                 return true;
 
             if (((object)left == null) || ((object)right == null))

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MathGame"
         mc:Ignorable="d"
         Title="Achievement Unlocked!" Closing="windowNewAchievement_Closing" Icon="Math.ico" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="17">
     <Grid Margin="10">

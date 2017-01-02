@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace MathGame
@@ -8,19 +7,7 @@ namespace MathGame
     {
         private string _name = "";
         private string _password = "";
-        private int _totalWins = 0;
-        private int _easyAdditionWins = 0;
-        private int _mediumAdditionWins = 0;
-        private int _hardAdditionWins = 0;
-        private int _easySubtractionWins = 0;
-        private int _mediumSubtractionWins = 0;
-        private int _hardSubtractionWins = 0;
-        private int _easyMultiplicationWins = 0;
-        private int _mediumMultiplicationWins = 0;
-        private int _hardMultiplicationWins = 0;
-        private int _easyDivisionWins = 0;
-        private int _mediumDivisionWins = 0;
-        private int _hardDivisionWins = 0;
+        private int _totalWins, _easyAdditionWins, _mediumAdditionWins, _hardAdditionWins, _easySubtractionWins, _mediumSubtractionWins, _hardSubtractionWins, _easyMultiplicationWins, _mediumMultiplicationWins, _hardMultiplicationWins, _easyDivisionWins, _mediumDivisionWins, _hardDivisionWins;
         private List<Achievement> _unlockedAchievements = new List<Achievement>();
 
         #region Properties

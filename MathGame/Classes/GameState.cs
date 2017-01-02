@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -16,7 +17,7 @@ namespace MathGame
         internal static async void LoadAll()
         {
             SQLiteConnection con = new SQLiteConnection();
-            SQLiteDataAdapter da = new SQLiteDataAdapter();
+            SQLiteDataAdapter da;
             DataSet ds = new DataSet();
             con.ConnectionString = _DBPROVIDERANDSOURCE;
 
@@ -40,7 +41,7 @@ namespace MathGame
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Filling DataSet", MessageBoxButton.OK);
+                    new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK).ShowDialog();
                 }
                 finally { con.Close(); }
             });
@@ -52,8 +53,7 @@ namespace MathGame
         internal static async void SavePlayer()
         {
             SQLiteCommand cmd = new SQLiteCommand();
-            SQLiteConnection con = new SQLiteConnection();
-            con.ConnectionString = _DBPROVIDERANDSOURCE;
+            SQLiteConnection con = new SQLiteConnection { ConnectionString = _DBPROVIDERANDSOURCE };
             string sql = "UPDATE Players SET [AchievementsUnlocked] = @achievementsUnlocked,[TotalWins] = @totalWins,[EasyAdditionWins] = @easyAdditionWins,[MediumAdditionWins] = @mediumAdditionWins,[HardAdditionWins] = @hardAdditionWins,[EasySubtractionWins] = @easySubtractionWins,[MediumSubtractionWins] = @mediumSubtractionWins,[HardSubtractionWins] = @hardSubtractionWins,[EasyMultiplicationWins] = @easyMultiplicationWins,[MediumMultiplicationWins] = @mediumMultiplicationWins,[HardMultiplicationWins] = @hardMultiplicationWins,[EasyDivisionWins] = @easyDivisionWins,[MediumDivisionWins] = @mediumDivisionWins,[HardDivisionWins] = @hardDivisionWins WHERE [Username] = @username";
 
             cmd.CommandType = CommandType.Text;
@@ -84,7 +84,7 @@ namespace MathGame
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error Saving Player", MessageBoxButton.OK);
+                    new Notification(ex.Message, "Error Saving Player", NotificationButtons.OK).ShowDialog();
                 }
                 finally { con.Close(); }
             });

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MathGame"
         mc:Ignorable="d"
         Title="QuestionWindow" Closing="windowQuestion_Closing" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Segoe UI Semibold" FontSize="17" Icon="Math.ico">
     <Grid>

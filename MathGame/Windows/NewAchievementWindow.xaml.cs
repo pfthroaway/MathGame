@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MathGame
 {
     /// <summary>
     /// Interaction logic for NewAchievementWindow.xaml
     /// </summary>
-    public partial class NewAchievementWindow : Window, INotifyPropertyChanged
+    public partial class NewAchievementWindow : INotifyPropertyChanged
     {
         private Achievement newAchievement = new Achievement();
 
@@ -65,7 +53,7 @@ namespace MathGame
             InitializeComponent();
         }
 
-        private void windowNewAchievement_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void windowNewAchievement_Closing(object sender, CancelEventArgs e)
         {
         }
 

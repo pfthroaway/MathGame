@@ -34,10 +34,7 @@ namespace MathGame
             set { _int2 = value; OnPropertyChanged("Int2"); OnPropertyChanged("QuestionToString"); }
         }
 
-        public string QuestionToString
-        {
-            get { return Int1 + Operation + Int2; }
-        }
+        public string QuestionToString => Int1 + Operation + Int2;
 
         public string Operation
         {
