@@ -1,5 +1,6 @@
 ﻿using Extensions;
 using MathGame.Classes;
+using MathGame.Classes.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -11,7 +12,9 @@ namespace MathGame.Views
     {
         private List<Question> _questionList = new List<Question>();
         private int _questionIndex, _attemptsRemaining, _score;
-        private string _gameType, _difficulty, _comment;
+        private string _comment;
+        private Operation _gameType;
+        private Difficulty _difficulty;
         private Question _selectedQuestion = new Question();
 
         #region Modifying Properties
@@ -20,14 +23,14 @@ namespace MathGame.Views
         public bool QuestionDone { get; set; }
 
         /// <summary>Which game type is currently being played?</summary>
-        public string GameType
+        public Operation GameType
         {
             get => _gameType;
             set { _gameType = value; OnPropertyChanged("GameType"); }
         }
 
         /// <summary>What is the difficulty level of the current game type?</summary>
-        public string Difficulty
+        public Difficulty Difficulty
         {
             get => _difficulty;
             set { _difficulty = value; OnPropertyChanged("Difficulty"); }
@@ -147,10 +150,10 @@ namespace MathGame.Views
         {
             switch (GameType)
             {
-                case "Addition":
+                case Operation.Addition:
                     switch (Difficulty)
                     {
-                        case "Easy":
+                        case Difficulty.Easy:
                             GameState.CurrentPlayer.EasyAdditionWins++;
                             if (GameState.CurrentPlayer.EasyAdditionWins == 5)
                                 EarnAchievement("5 Easy Addition Wins");
@@ -159,7 +162,7 @@ namespace MathGame.Views
 
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             GameState.CurrentPlayer.MediumAdditionWins++;
                             if (GameState.CurrentPlayer.MediumAdditionWins == 5)
                                 EarnAchievement("5 Medium Addition Wins");
@@ -167,23 +170,34 @@ namespace MathGame.Views
                                 EarnAchievement("20 Medium Addition Wins");
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             GameState.CurrentPlayer.HardAdditionWins++;
                             if (GameState.CurrentPlayer.MediumAdditionWins == 5)
                                 EarnAchievement("5 Medium Addition Wins");
                             else if (GameState.CurrentPlayer.MediumAdditionWins == 20)
                                 EarnAchievement("20 Medium Addition Wins");
 
-                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Addition")))
+                            if (AttemptsRemaining == 3)
                                 EarnAchievement("Perfect Game Hard Addition");
+                            break;
+
+                        case Difficulty.VeryHard:
+                            GameState.CurrentPlayer.VeryHardAdditionWins++;
+                            if (GameState.CurrentPlayer.VeryHardAdditionWins == 5)
+                                EarnAchievement("5 Very Hard Addition Wins");
+                            else if (GameState.CurrentPlayer.VeryHardAdditionWins == 20)
+                                EarnAchievement("20 Very Hard Addition Wins");
+
+                            if (AttemptsRemaining == 2)
+                                EarnAchievement("Perfect Game Very Hard Addition");
                             break;
                     }
                     break;
 
-                case "Subtraction":
+                case Operation.Subtraction:
                     switch (Difficulty)
                     {
-                        case "Easy":
+                        case Difficulty.Easy:
                             if (GameState.CurrentPlayer.EasySubtractionWins == 5)
                                 EarnAchievement("5 Easy Subtraction Wins");
                             else if (GameState.CurrentPlayer.EasySubtractionWins == 20)
@@ -191,30 +205,41 @@ namespace MathGame.Views
 
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             if (GameState.CurrentPlayer.MediumSubtractionWins == 5)
                                 EarnAchievement("5 Medium Subtraction Wins");
                             else if (GameState.CurrentPlayer.MediumSubtractionWins == 20)
                                 EarnAchievement("20 Medium Subtraction Wins");
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             GameState.CurrentPlayer.HardAdditionWins++;
                             if (GameState.CurrentPlayer.HardSubtractionWins == 5)
                                 EarnAchievement("5 Hard Subtraction Wins");
                             else if (GameState.CurrentPlayer.HardSubtractionWins == 20)
                                 EarnAchievement("20 Hard Subtraction Wins");
 
-                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Subtraction")))
+                            if (AttemptsRemaining == 3)
                                 EarnAchievement("Perfect Game Hard Subtraction");
+                            break;
+
+                        case Difficulty.VeryHard:
+                            GameState.CurrentPlayer.VeryHardSubtractionWins++;
+                            if (GameState.CurrentPlayer.VeryHardSubtractionWins == 5)
+                                EarnAchievement("5 Very Hard Subtraction Wins");
+                            else if (GameState.CurrentPlayer.VeryHardSubtractionWins == 20)
+                                EarnAchievement("20 Very Hard Subtraction Wins");
+
+                            if (AttemptsRemaining == 2)
+                                EarnAchievement("Perfect Game Very Hard Subtraction");
                             break;
                     }
                     break;
 
-                case "Multiplication":
+                case Operation.Multiplication:
                     switch (Difficulty)
                     {
-                        case "Easy":
+                        case Difficulty.Easy:
                             if (GameState.CurrentPlayer.EasyMultiplicationWins == 5)
                                 EarnAchievement("5 Easy Multiplication Wins");
                             else if (GameState.CurrentPlayer.EasyMultiplicationWins == 20)
@@ -222,29 +247,40 @@ namespace MathGame.Views
 
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             if (GameState.CurrentPlayer.MediumMultiplicationWins == 5)
                                 EarnAchievement("5 Medium Multiplication Wins");
                             else if (GameState.CurrentPlayer.MediumMultiplicationWins == 20)
                                 EarnAchievement("20 Medium Multiplication Wins");
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             if (GameState.CurrentPlayer.HardMultiplicationWins == 5)
                                 EarnAchievement("5 Hard Multiplication Wins");
                             else if (GameState.CurrentPlayer.HardMultiplicationWins == 20)
                                 EarnAchievement("20 Hard Multiplication Wins");
 
-                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Multiplication")))
+                            if (AttemptsRemaining == 3)
                                 EarnAchievement("Perfect Game Hard Multiplication");
+                            break;
+
+                        case Difficulty.VeryHard:
+                            GameState.CurrentPlayer.VeryHardMultiplicationWins++;
+                            if (GameState.CurrentPlayer.VeryHardMultiplicationWins == 5)
+                                EarnAchievement("5 Very Hard Multiplication Wins");
+                            else if (GameState.CurrentPlayer.VeryHardMultiplicationWins == 20)
+                                EarnAchievement("20 Very Hard Multiplication Wins");
+
+                            if (AttemptsRemaining == 2)
+                                EarnAchievement("Perfect Game Very Hard Multiplication");
                             break;
                     }
                     break;
 
-                case "Division":
+                case Operation.Division:
                     switch (Difficulty)
                     {
-                        case "Easy":
+                        case Difficulty.Easy:
                             if (GameState.CurrentPlayer.EasyDivisionWins == 5)
                                 EarnAchievement("5 Easy Division Wins");
                             else if (GameState.CurrentPlayer.EasyDivisionWins == 20)
@@ -252,21 +288,32 @@ namespace MathGame.Views
 
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             if (GameState.CurrentPlayer.MediumDivisionWins == 5)
                                 EarnAchievement("5 Medium Division Wins");
                             else if (GameState.CurrentPlayer.MediumDivisionWins == 20)
                                 EarnAchievement("20 Medium Division Wins");
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             if (GameState.CurrentPlayer.HardDivisionWins == 5)
                                 EarnAchievement("5 Hard Division Wins");
                             else if (GameState.CurrentPlayer.HardDivisionWins == 20)
                                 EarnAchievement("20 Hard Division Wins");
 
-                            if (AttemptsRemaining == 3 && !GameState.CurrentPlayer.UnlockedAchievements.Contains(GameState.AllAchievements.Find(ach => ach.Name == "Perfect Game Hard Division")))
+                            if (AttemptsRemaining == 3)
                                 EarnAchievement("Perfect Game Hard Division");
+                            break;
+
+                        case Difficulty.VeryHard:
+                            GameState.CurrentPlayer.VeryHardDivisionWins++;
+                            if (GameState.CurrentPlayer.VeryHardDivisionWins == 5)
+                                EarnAchievement("5 Very Hard Division Wins");
+                            else if (GameState.CurrentPlayer.VeryHardDivisionWins == 20)
+                                EarnAchievement("20 Very Hard Division Wins");
+
+                            if (AttemptsRemaining == 2)
+                                EarnAchievement("Perfect Game Very Hard Division");
                             break;
                     }
                     break;
@@ -278,10 +325,13 @@ namespace MathGame.Views
         private void EarnAchievement(string achievementName)
         {
             Achievement newAchievement = GameState.AllAchievements.Find(ach => ach.Name == achievementName);
-            GameState.CurrentPlayer.UnlockedAchievements.Add(newAchievement);
-            NewAchievementPage newAchievementPage = new NewAchievementPage();
-            newAchievementPage.LoadAchievement(newAchievement);
-            GameState.Navigate(newAchievementPage);
+            if (!GameState.CurrentPlayer.UnlockedAchievements.Contains(newAchievement))
+            {
+                GameState.CurrentPlayer.UnlockedAchievements.Add(newAchievement);
+                NewAchievementPage newAchievementPage = new NewAchievementPage();
+                newAchievementPage.LoadAchievement(newAchievement);
+                GameState.Navigate(newAchievementPage);
+            }
         }
 
         #endregion Achievement-Manipulation
@@ -289,92 +339,108 @@ namespace MathGame.Views
         /// <summary>Loads the game.</summary>
         /// <param name="mathType">What math operation to use</param>
         /// <param name="difficulty">Difficulty of game</param>
-        internal void LoadGame(string mathType, string difficulty)
+        internal void LoadGame(Operation mathType, Difficulty difficulty)
         {
             GameType = mathType;
             Difficulty = difficulty;
             switch (GameType)
             {
-                case "Addition":
+                case Operation.Addition:
                     switch (Difficulty)
                     {
-                        case "Practice":
+                        case Difficulty.Practice:
                             Addition(30, 100);
                             break;
 
-                        case "Easy":
+                        case Difficulty.Easy:
                             Addition(10, 10);
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             Addition(20, 15);
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             Addition(30, 20);
+                            break;
+
+                        case Difficulty.VeryHard:
+                            Addition(100, 25);
                             break;
                     }
                     break;
 
-                case "Subtraction":
+                case Operation.Subtraction:
                     switch (Difficulty)
                     {
-                        case "Practice":
+                        case Difficulty.Practice:
                             Subtraction(30, 100);
                             break;
 
-                        case "Easy":
+                        case Difficulty.Easy:
                             Subtraction(12, 10);
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             Subtraction(20, 15);
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             Subtraction(30, 20);
+                            break;
+
+                        case Difficulty.VeryHard:
+                            Subtraction(100, 25);
                             break;
                     }
                     break;
 
-                case "Multiplication":
+                case Operation.Multiplication:
                     switch (Difficulty)
                     {
-                        case "Practice":
+                        case Difficulty.Practice:
                             Multiplication(15, 100);
                             break;
 
-                        case "Easy":
+                        case Difficulty.Easy:
                             Multiplication(5, 10);
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             Multiplication(10, 15);
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             Multiplication(15, 20);
+                            break;
+
+                        case Difficulty.VeryHard:
+                            Multiplication(30, 25);
                             break;
                     }
                     break;
 
-                case "Division":
+                case Operation.Division:
                     switch (Difficulty)
                     {
-                        case "Practice":
+                        case Difficulty.Practice:
                             Division(50, 100);
                             break;
 
-                        case "Easy":
+                        case Difficulty.Easy:
                             Division(20, 10);
                             break;
 
-                        case "Medium":
+                        case Difficulty.Medium:
                             Division(40, 15);
                             break;
 
-                        case "Hard":
+                        case Difficulty.Hard:
                             Division(60, 20);
+                            break;
+
+                        case Difficulty.VeryHard:
+                            Division(100, 25);
                             break;
                     }
                     break;
@@ -382,20 +448,24 @@ namespace MathGame.Views
 
             switch (Difficulty)
             {
-                case "Practice":
+                case Difficulty.Practice:
                     AttemptsRemaining = 100;
                     break;
 
-                case "Easy":
+                case Difficulty.Easy:
                     AttemptsRemaining = 6;
                     break;
 
-                case "Medium":
+                case Difficulty.Medium:
                     AttemptsRemaining = 4;
                     break;
 
-                case "Hard":
+                case Difficulty.Hard:
                     AttemptsRemaining = 3;
+                    break;
+
+                case Difficulty.VeryHard:
+                    AttemptsRemaining = 2;
                     break;
             }
 

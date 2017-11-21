@@ -1,11 +1,12 @@
 ﻿namespace MathGame.Classes.Enums
 {
     /// <summary>Represents the difficulty level of a game.</summary>
-    internal enum Difficulty
+    public enum Difficulty
     {
         Practice,
         Easy,
         Medium,
-        Hard
+        Hard,
+        VeryHard
     }
 }

@@ -20,7 +20,7 @@ namespace MathGame.Views
             if (username.Length >= 4 && await GameState.CheckNewPlayerName(username) && PswdPassword.Password == PswdConfirmPassword.Password && PswdPassword.Password.Length >= 4)
             {
                 string hashedPassword = PBKDF2.HashPassword(PswdPassword.Password);
-                Player newPlayer = new Player(username, hashedPassword, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<Achievement>());
+                Player newPlayer = new Player(username, hashedPassword, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new List<Achievement>());
                 if (await GameState.NewPlayer(newPlayer))
                 {
                     GameState.CurrentPlayer = new Player(newPlayer);

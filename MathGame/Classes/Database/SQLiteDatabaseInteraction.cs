@@ -37,7 +37,7 @@ namespace MathGame.Classes.Database
 
             List<Achievement> allAchievements = new List<Achievement>();
             if (ds.Tables[0].Rows.Count > 0)
-                allAchievements.AddRange(from DataRow dr in ds.Tables[0].Rows select new Achievement(dr["AchievementName"].ToString(), dr["AchievementDescription"].ToString(), Int32Helper.Parse(dr["AchievementPoints"]), dr["AchievementType"].ToString()));
+                allAchievements.AddRange(from DataRow dr in ds.Tables[0].Rows select new Achievement(dr["Name"].ToString(), dr["Description"].ToString(), Int32Helper.Parse(dr["Points"]), dr["Type"].ToString()));
 
             return allAchievements;
         }
@@ -71,19 +71,23 @@ namespace MathGame.Classes.Database
             DataRow dr = ds.Tables[0].Rows[0];
             loadPlayer.Name = username;
             loadPlayer.Password = dr["Password"].ToString();
-            loadPlayer.TotalWins = Int32Helper.Parse(dr["TotalWins"].ToString());
-            loadPlayer.EasyAdditionWins = Int32Helper.Parse(dr["EasyAdditionWins"].ToString());
-            loadPlayer.MediumAdditionWins = Int32Helper.Parse(dr["MediumAdditionWins"].ToString());
-            loadPlayer.HardAdditionWins = Int32Helper.Parse(dr["HardAdditionWins"].ToString());
-            loadPlayer.EasySubtractionWins = Int32Helper.Parse(dr["EasySubtractionWins"].ToString());
-            loadPlayer.MediumSubtractionWins = Int32Helper.Parse(dr["MediumSubtractionWins"].ToString());
-            loadPlayer.HardSubtractionWins = Int32Helper.Parse(dr["HardSubtractionWins"].ToString());
-            loadPlayer.EasyMultiplicationWins = Int32Helper.Parse(dr["EasyMultiplicationWins"].ToString());
-            loadPlayer.MediumMultiplicationWins = Int32Helper.Parse(dr["MediumMultiplicationWins"].ToString());
-            loadPlayer.HardMultiplicationWins = Int32Helper.Parse(dr["HardMultiplicationWins"].ToString());
-            loadPlayer.EasyDivisionWins = Int32Helper.Parse(dr["EasyDivisionWins"].ToString());
-            loadPlayer.MediumDivisionWins = Int32Helper.Parse(dr["MediumDivisionWins"].ToString());
-            loadPlayer.HardDivisionWins = Int32Helper.Parse(dr["HardDivisionWins"].ToString());
+            loadPlayer.TotalWins = Int32Helper.Parse(dr["TotalWins"]);
+            loadPlayer.EasyAdditionWins = Int32Helper.Parse(dr["EasyAdditionWins"]);
+            loadPlayer.MediumAdditionWins = Int32Helper.Parse(dr["MediumAdditionWins"]);
+            loadPlayer.HardAdditionWins = Int32Helper.Parse(dr["HardAdditionWins"]);
+            loadPlayer.VeryHardAdditionWins = Int32Helper.Parse(dr["VeryHardAdditionWins"]);
+            loadPlayer.EasySubtractionWins = Int32Helper.Parse(dr["EasySubtractionWins"]);
+            loadPlayer.MediumSubtractionWins = Int32Helper.Parse(dr["MediumSubtractionWins"]);
+            loadPlayer.HardSubtractionWins = Int32Helper.Parse(dr["HardSubtractionWins"]);
+            loadPlayer.VeryHardSubtractionWins = Int32Helper.Parse(dr["VeryHardSubtractionWins"]);
+            loadPlayer.EasyMultiplicationWins = Int32Helper.Parse(dr["EasyMultiplicationWins"]);
+            loadPlayer.MediumMultiplicationWins = Int32Helper.Parse(dr["MediumMultiplicationWins"]);
+            loadPlayer.HardMultiplicationWins = Int32Helper.Parse(dr["HardMultiplicationWins"]);
+            loadPlayer.VeryHardMultiplicationWins = Int32Helper.Parse(dr["VeryHardMultiplicationWins"]);
+            loadPlayer.EasyDivisionWins = Int32Helper.Parse(dr["EasyDivisionWins"]);
+            loadPlayer.MediumDivisionWins = Int32Helper.Parse(dr["MediumDivisionWins"]);
+            loadPlayer.HardDivisionWins = Int32Helper.Parse(dr["HardDivisionWins"]);
+            loadPlayer.VeryHardDivisionWins = Int32Helper.Parse(dr["VeryHardDivisionWins"]);
 
             if (dr["AchievementsUnlocked"].ToString().Length > 0)
                 loadPlayer.LoadAchievements(dr["AchievementsUnlocked"].ToString());
@@ -96,7 +100,7 @@ namespace MathGame.Classes.Database
         /// <returns>True if successful</returns>
         public async Task<bool> NewPlayer(Player newPlayer)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Players([Username], [Password],[AchievementsUnlocked], [TotalWins], [EasyAdditionWins], [MediumAdditionWins], [HardAdditionWins], [EasySubtractionWins], [MediumSubtractionWins], [HardSubtractionWins], [EasyMultiplicationWins], [MediumMultiplicationWins], [HardMultiplicationWins], [EasyDivisionWins], [MediumDivisionWins], [HardDivisionWins])VALUES(@username, @hashedPassword, @achievementsUnlocked, @totalWins, @easyAdditionWins, @mediumAdditionWins, @hardAdditionWins, @easySubtractionWins, @mediumSubtractionWins, @hardSubtractionWins, @easyMultiplicationWins, @mediumMultiplicationWins, @hardMultiplicationWins, @easyDivisionWins, @mediumDivisionWins, @hardDivisionWins)" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Players([Username], [Password],[AchievementsUnlocked], [TotalWins], [EasyAdditionWins], [MediumAdditionWins], [HardAdditionWins], [VeryHardAdditionWins], [EasySubtractionWins], [MediumSubtractionWins], [HardSubtractionWins], [VeryHardSubtractionWins], [EasyMultiplicationWins], [MediumMultiplicationWins], [HardMultiplicationWins], [VeryHardMultiplicationWins], [EasyDivisionWins], [MediumDivisionWins], [HardDivisionWins], [VeryHardDivisionWins])VALUES(@username, @hashedPassword, @achievementsUnlocked, @totalWins, @easyAdditionWins, @mediumAdditionWins, @hardAdditionWins, @veryHardAdditionWins, @easySubtractionWins, @mediumSubtractionWins, @hardSubtractionWins, @veryHardSubtractionWins, @easyMultiplicationWins, @mediumMultiplicationWins, @hardMultiplicationWins, @veryHardMultiplicationWins, @easyDivisionWins, @mediumDivisionWins, @hardDivisionWins, @veryHardDivisionWins)" };
             cmd.Parameters.AddWithValue("@username", newPlayer.Name);
             cmd.Parameters.AddWithValue("@hashedPassword", newPlayer.Password);
             cmd.Parameters.AddWithValue("@achievementsUnlocked", newPlayer.UnlockedAchievementsToString);
@@ -104,15 +108,19 @@ namespace MathGame.Classes.Database
             cmd.Parameters.AddWithValue("@easyAdditionWins", newPlayer.EasyAdditionWins);
             cmd.Parameters.AddWithValue("@mediumAdditionWins", newPlayer.MediumAdditionWins);
             cmd.Parameters.AddWithValue("@hardAdditionWins", newPlayer.HardAdditionWins);
+            cmd.Parameters.AddWithValue("@veryHardAdditionWins", newPlayer.VeryHardAdditionWins);
             cmd.Parameters.AddWithValue("@easySubtractionWins", newPlayer.EasySubtractionWins);
             cmd.Parameters.AddWithValue("@mediumSubtractionWins", newPlayer.MediumSubtractionWins);
             cmd.Parameters.AddWithValue("@hardSubtractionWins", newPlayer.HardSubtractionWins);
+            cmd.Parameters.AddWithValue("@veryHardSubtractionWins", newPlayer.VeryHardSubtractionWins);
             cmd.Parameters.AddWithValue("@easyMultiplicationWins", newPlayer.EasyMultiplicationWins);
             cmd.Parameters.AddWithValue("@mediumMultiplicationWins", newPlayer.MediumMultiplicationWins);
             cmd.Parameters.AddWithValue("@hardMultiplicationWins", newPlayer.HardMultiplicationWins);
+            cmd.Parameters.AddWithValue("@veryHardMultiplicationWins", newPlayer.VeryHardMultiplicationWins);
             cmd.Parameters.AddWithValue("@easyDivisionWins", newPlayer.EasyDivisionWins);
             cmd.Parameters.AddWithValue("@mediumDivisionWins", newPlayer.MediumDivisionWins);
             cmd.Parameters.AddWithValue("@hardDivisionWins", newPlayer.HardDivisionWins);
+            cmd.Parameters.AddWithValue("@veryHardDivisionWins", newPlayer.VeryHardDivisionWins);
 
             return await SQLite.ExecuteCommand(_con, cmd);
         }

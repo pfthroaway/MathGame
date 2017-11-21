@@ -6,7 +6,7 @@ namespace MathGame.Classes
     internal class Question : INotifyPropertyChanged
     {
         private int _int1, _int2, _solution;
-        private string _operation = "";
+        private string _operation;
         private List<int> _possibleSolutions = new List<int>();
 
         #region Data-Binding

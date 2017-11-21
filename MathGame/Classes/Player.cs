@@ -6,7 +6,7 @@ namespace MathGame.Classes
     internal class Player : INotifyPropertyChanged
     {
         private string _name, _password;
-        private int _totalWins, _easyAdditionWins, _mediumAdditionWins, _hardAdditionWins, _easySubtractionWins, _mediumSubtractionWins, _hardSubtractionWins, _easyMultiplicationWins, _mediumMultiplicationWins, _hardMultiplicationWins, _easyDivisionWins, _mediumDivisionWins, _hardDivisionWins;
+        private int _totalWins, _easyAdditionWins, _mediumAdditionWins, _hardAdditionWins, _veryHardAdditionWins, _easySubtractionWins, _mediumSubtractionWins, _hardSubtractionWins, _veryHardSubtractionWins, _easyMultiplicationWins, _mediumMultiplicationWins, _hardMultiplicationWins, _veryHardMultiplicationWins, _easyDivisionWins, _mediumDivisionWins, _hardDivisionWins, _veryHardDivisionWins;
         private List<Achievement> _unlockedAchievements = new List<Achievement>();
 
         #region Properties
@@ -47,6 +47,12 @@ namespace MathGame.Classes
             set { _hardAdditionWins = value; OnPropertyChanged("HardAdditionWins"); }
         }
 
+        public int VeryHardAdditionWins
+        {
+            get => _veryHardAdditionWins;
+            set { _veryHardAdditionWins = value; OnPropertyChanged("VeryHardAdditionWins"); }
+        }
+
         public int EasySubtractionWins
         {
             get => _easySubtractionWins;
@@ -63,6 +69,12 @@ namespace MathGame.Classes
         {
             get => _hardSubtractionWins;
             set { _hardSubtractionWins = value; OnPropertyChanged("HardSubtractionWins"); }
+        }
+
+        public int VeryHardSubtractionWins
+        {
+            get => _veryHardSubtractionWins;
+            set { _veryHardSubtractionWins = value; OnPropertyChanged("VeryHardSubtractionWins"); }
         }
 
         public int EasyMultiplicationWins
@@ -83,6 +95,12 @@ namespace MathGame.Classes
             set { _hardMultiplicationWins = value; OnPropertyChanged("HardMultiplicationWins"); }
         }
 
+        public int VeryHardMultiplicationWins
+        {
+            get => _veryHardMultiplicationWins;
+            set { _veryHardMultiplicationWins = value; OnPropertyChanged("VeryHardMultiplicationWins"); }
+        }
+
         public int EasyDivisionWins
         {
             get => _easyDivisionWins;
@@ -99,6 +117,12 @@ namespace MathGame.Classes
         {
             get => _hardDivisionWins;
             set { _hardDivisionWins = value; OnPropertyChanged("HardDivisionWins"); }
+        }
+
+        public int VeryHardDivisionWins
+        {
+            get => _veryHardDivisionWins;
+            set { _veryHardDivisionWins = value; OnPropertyChanged("VeryHardDivisionWins"); }
         }
 
         internal List<Achievement> UnlockedAchievements
@@ -162,7 +186,7 @@ namespace MathGame.Classes
         /// <param name="mediumDivisionWins"></param>
         /// <param name="hardDivisionWins"></param>
         /// <param name="unlockedAchievements"></param>
-        public Player(string name, string password, int totalWins, int easyAdditionWins, int mediumAdditionWins, int hardAdditionWins, int easySubtractionWins, int mediumSubtractionWins, int hardSubtractionWins, int easyMultiplicationWins, int mediumMultiplicationWins, int hardMultiplicationWins, int easyDivisionWins, int mediumDivisionWins, int hardDivisionWins, List<Achievement> unlockedAchievements)
+        public Player(string name, string password, int totalWins, int easyAdditionWins, int mediumAdditionWins, int hardAdditionWins, int veryHardAdditionWins, int easySubtractionWins, int mediumSubtractionWins, int hardSubtractionWins, int veryHardSubtractionWins, int easyMultiplicationWins, int mediumMultiplicationWins, int hardMultiplicationWins, int veryHardMultiplicationWins, int easyDivisionWins, int mediumDivisionWins, int hardDivisionWins, int veryHardDivisionWins, List<Achievement> unlockedAchievements)
         {
             Name = name;
             Password = password;
@@ -170,21 +194,25 @@ namespace MathGame.Classes
             EasyAdditionWins = easyAdditionWins;
             MediumAdditionWins = mediumAdditionWins;
             HardAdditionWins = hardAdditionWins;
+            VeryHardAdditionWins = veryHardAdditionWins;
             EasySubtractionWins = easySubtractionWins;
             MediumSubtractionWins = mediumSubtractionWins;
             HardSubtractionWins = hardSubtractionWins;
+            VeryHardSubtractionWins = veryHardSubtractionWins;
             EasyMultiplicationWins = easyMultiplicationWins;
             MediumMultiplicationWins = mediumMultiplicationWins;
             HardMultiplicationWins = hardMultiplicationWins;
+            VeryHardMultiplicationWins = veryHardMultiplicationWins;
             EasyDivisionWins = easyDivisionWins;
             MediumDivisionWins = mediumDivisionWins;
             HardDivisionWins = hardDivisionWins;
+            VeryHardDivisionWins = veryHardDivisionWins;
             UnlockedAchievements = unlockedAchievements;
         }
 
         /// <summary>Replaces this instance of Player with another instance.</summary>
         /// <param name="other">Instance to replace this instance</param>
-        public Player(Player other) : this(other.Name, other.Password, other.TotalWins, other.EasyAdditionWins, other.MediumAdditionWins, other.HardAdditionWins, other.EasySubtractionWins, other.MediumSubtractionWins, other.HardSubtractionWins, other.EasyMultiplicationWins, other.MediumMultiplicationWins, other.HardMultiplicationWins, other.EasyDivisionWins, other.MediumDivisionWins, other.HardDivisionWins, other.UnlockedAchievements)
+        public Player(Player other) : this(other.Name, other.Password, other.TotalWins, other.EasyAdditionWins, other.MediumAdditionWins, other.HardAdditionWins, other.VeryHardAdditionWins, other.EasySubtractionWins, other.MediumSubtractionWins, other.HardSubtractionWins, other.VeryHardSubtractionWins, other.EasyMultiplicationWins, other.MediumMultiplicationWins, other.HardMultiplicationWins, other.VeryHardMultiplicationWins, other.EasyDivisionWins, other.MediumDivisionWins, other.HardDivisionWins, other.VeryHardDivisionWins, other.UnlockedAchievements)
         {
         }
 

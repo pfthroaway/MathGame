@@ -1,4 +1,5 @@
 ﻿using MathGame.Classes;
+using MathGame.Classes.Enums;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,7 +13,7 @@ namespace MathGame.Views
         /// <summary>Opens the Question Page to play the game.</summary>
         /// <param name="gameType">What type of game is being played</param>
         /// <param name="difficulty">Difficulty of game</param>
-        private void Play(string gameType, string difficulty)
+        private void Play(Operation gameType, Difficulty difficulty)
         {
             QuestionPage questionPage = new QuestionPage();
             questionPage.LoadGame(gameType, difficulty);
@@ -29,49 +30,57 @@ namespace MathGame.Views
 
         #region Addition Button-Click Methods
 
-        private void BtnAdditionPractice_Click(object sender, RoutedEventArgs e) => Play("Addition", "Practice");
+        private void BtnAdditionPractice_Click(object sender, RoutedEventArgs e) => Play(Operation.Addition, Difficulty.Practice);
 
-        private void BtnAdditionEasy_Click(object sender, RoutedEventArgs e) => Play("Addition", "Easy");
+        private void BtnAdditionEasy_Click(object sender, RoutedEventArgs e) => Play(Operation.Addition, Difficulty.Easy);
 
-        private void BtnAdditionMedium_Click(object sender, RoutedEventArgs e) => Play("Addition", "Medium");
+        private void BtnAdditionMedium_Click(object sender, RoutedEventArgs e) => Play(Operation.Addition, Difficulty.Medium);
 
-        private void BtnAdditionHard_Click(object sender, RoutedEventArgs e) => Play("Addition", "Hard");
+        private void BtnAdditionHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Addition, Difficulty.Hard);
+
+        private void BtnAdditionVeryHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Addition, Difficulty.VeryHard);
 
         #endregion Addition Button-Click Methods
 
         #region Subtraction Button-Click Methods
 
-        private void BtnSubtractionPractice_Click(object sender, RoutedEventArgs e) => Play("Subtraction", "Practice");
+        private void BtnSubtractionPractice_Click(object sender, RoutedEventArgs e) => Play(Operation.Subtraction, Difficulty.Practice);
 
-        private void BtnSubtractionEasy_Click(object sender, RoutedEventArgs e) => Play("Subtraction", "Easy");
+        private void BtnSubtractionEasy_Click(object sender, RoutedEventArgs e) => Play(Operation.Subtraction, Difficulty.Easy);
 
-        private void BtnSubtractionMedium_Click(object sender, RoutedEventArgs e) => Play("Subtraction", "Medium");
+        private void BtnSubtractionMedium_Click(object sender, RoutedEventArgs e) => Play(Operation.Subtraction, Difficulty.Medium);
 
-        private void BtnSubtractionHard_Click(object sender, RoutedEventArgs e) => Play("Subtraction", "Hard");
+        private void BtnSubtractionHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Subtraction, Difficulty.Hard);
+
+        private void BtnSubtractionVeryHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Subtraction, Difficulty.VeryHard);
 
         #endregion Subtraction Button-Click Methods
 
         #region Multiplication Button-Click Methods
 
-        private void BtnMultiplicationPractice_Click(object sender, RoutedEventArgs e) => Play("Multiplication", "Practice");
+        private void BtnMultiplicationPractice_Click(object sender, RoutedEventArgs e) => Play(Operation.Multiplication, Difficulty.Practice);
 
-        private void BtnMultiplicationEasy_Click(object sender, RoutedEventArgs e) => Play("Multiplication", "Easy");
+        private void BtnMultiplicationEasy_Click(object sender, RoutedEventArgs e) => Play(Operation.Multiplication, Difficulty.Easy);
 
-        private void BtnMultiplicationMedium_Click(object sender, RoutedEventArgs e) => Play("Multiplication", "Medium");
+        private void BtnMultiplicationMedium_Click(object sender, RoutedEventArgs e) => Play(Operation.Multiplication, Difficulty.Medium);
 
-        private void BtnMultiplicationHard_Click(object sender, RoutedEventArgs e) => Play("Multiplication", "Hard");
+        private void BtnMultiplicationHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Multiplication, Difficulty.Hard);
+
+        private void BtnMultiplicationVeryHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Multiplication, Difficulty.VeryHard);
 
         #endregion Multiplication Button-Click Methods
 
         #region Division Button-Click Methods
 
-        private void BtnDivisionPractice_Click(object sender, RoutedEventArgs e) => Play("Division", "Practice");
+        private void BtnDivisionPractice_Click(object sender, RoutedEventArgs e) => Play(Operation.Division, Difficulty.Practice);
 
-        private void BtnDivisionEasy_Click(object sender, RoutedEventArgs e) => Play("Division", "Easy");
+        private void BtnDivisionEasy_Click(object sender, RoutedEventArgs e) => Play(Operation.Division, Difficulty.Easy);
 
-        private void BtnDivisionMedium_Click(object sender, RoutedEventArgs e) => Play("Division", "Medium");
+        private void BtnDivisionMedium_Click(object sender, RoutedEventArgs e) => Play(Operation.Division, Difficulty.Medium);
 
-        private void BtnDivisionHard_Click(object sender, RoutedEventArgs e) => Play("Division", "Hard");
+        private void BtnDivisionHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Division, Difficulty.Hard);
+
+        private void BtnDivisionVeryHard_Click(object sender, RoutedEventArgs e) => Play(Operation.Division, Difficulty.VeryHard);
 
         #endregion Division Button-Click Methods
 
