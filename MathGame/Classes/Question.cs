@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace MathGame
+namespace MathGame.Classes
 {
     internal class Question : INotifyPropertyChanged
     {
@@ -13,59 +13,64 @@ namespace MathGame
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+        protected virtual void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 
-        #region Properties
+        #region Modifying Properties
 
+        /// <summary>First Integer</summary>
         public int Int1
         {
-            get { return _int1; }
+            get => _int1;
             set { _int1 = value; OnPropertyChanged("Int1"); OnPropertyChanged("QuestionToString"); }
         }
 
+        /// <summary>Second Integer</summary>
         public int Int2
         {
-            get { return _int2; }
+            get => _int2;
             set { _int2 = value; OnPropertyChanged("Int2"); OnPropertyChanged("QuestionToString"); }
         }
 
-        public string QuestionToString => Int1 + Operation + Int2;
-
+        /// <summary>Mathematical Operation being performed in this Question.</summary>
         public string Operation
         {
-            get { return _operation; }
+            get => _operation;
             set { _operation = value; OnPropertyChanged("Operation"); }
         }
 
+        /// <summary>Correct answer to the Question.</summary>
         public int Solution
         {
-            get { return _solution; }
+            get => _solution;
             set { _solution = value; OnPropertyChanged("Int2"); }
         }
 
+        /// <summary>List of possible solutions for this Question that the Player can choose from.</summary>
         public List<int> PossibleSolutions
         {
-            get { return _possibleSolutions; }
+            get => _possibleSolutions;
             set { _possibleSolutions = value; OnPropertyChanged("PossibleSolutions"); }
         }
 
-        #endregion Properties
+        #endregion Modifying Properties
 
-        /// <summary>
-        /// Initializes a default instance of Question.
-        /// </summary>
+        #region Helper Properties
+
+        /// <summary>Formatted Question.</summary>
+        public string QuestionToString => Int1 + Operation + Int2;
+
+        #endregion Helper Properties
+
+        #region Constructors
+
+        /// <summary>Initializes a default instance of Question.</summary>
         internal Question()
         {
         }
 
-        /// <summary>
-        /// Initializes an instance of Question by assigning Properties.
-        /// </summary>
+        /// <summary>Initializes an instance of Question by assigning Properties.</summary>
         /// <param name="num1">First number</param>
         /// <param name="num2">Second number</param>
         /// <param name="operation">Math operation</param>
@@ -80,17 +85,12 @@ namespace MathGame
             PossibleSolutions = solutionList;
         }
 
-        /// <summary>
-        /// Replaces this instance of Question with another instance.
-        /// </summary>
-        /// <param name="otherQuestion">Instance to replace this instance</param>
-        public Question(Question otherQuestion)
+        /// <summary>Replaces this instance of Question with another instance.</summary>
+        /// <param name="other">Instance to replace this instance</param>
+        public Question(Question other) : this(other.Int1, other.Int2, other.Operation, other.Solution, other.PossibleSolutions)
         {
-            Int1 = otherQuestion.Int1;
-            Int2 = otherQuestion.Int2;
-            Operation = otherQuestion.Operation;
-            Solution = otherQuestion.Solution;
-            PossibleSolutions = otherQuestion.PossibleSolutions;
         }
+
+        #endregion Constructors
     }
 }

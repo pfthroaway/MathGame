@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace MathGame
+namespace MathGame.Classes
 {
     internal class Player : INotifyPropertyChanged
     {
-        private string _name = "";
-        private string _password = "";
+        private string _name, _password;
         private int _totalWins, _easyAdditionWins, _mediumAdditionWins, _hardAdditionWins, _easySubtractionWins, _mediumSubtractionWins, _hardSubtractionWins, _easyMultiplicationWins, _mediumMultiplicationWins, _hardMultiplicationWins, _easyDivisionWins, _mediumDivisionWins, _hardDivisionWins;
         private List<Achievement> _unlockedAchievements = new List<Achievement>();
 
@@ -14,97 +13,97 @@ namespace MathGame
 
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set { _name = value; OnPropertyChanged("Name"); }
         }
 
         public string Password
         {
-            get { return _password; }
+            get => _password;
             set { _password = value; OnPropertyChanged("Name"); }
         }
 
         public int TotalWins
         {
-            get { return _totalWins; }
+            get => _totalWins;
             set { _totalWins = value; OnPropertyChanged("TotalWins"); }
         }
 
         public int EasyAdditionWins
         {
-            get { return _easyAdditionWins; }
+            get => _easyAdditionWins;
             set { _easyAdditionWins = value; OnPropertyChanged("EasyAdditionWins"); }
         }
 
         public int MediumAdditionWins
         {
-            get { return _mediumAdditionWins; }
+            get => _mediumAdditionWins;
             set { _mediumAdditionWins = value; OnPropertyChanged("MediumAdditionWins"); }
         }
 
         public int HardAdditionWins
         {
-            get { return _hardAdditionWins; }
+            get => _hardAdditionWins;
             set { _hardAdditionWins = value; OnPropertyChanged("HardAdditionWins"); }
         }
 
         public int EasySubtractionWins
         {
-            get { return _easySubtractionWins; }
+            get => _easySubtractionWins;
             set { _easySubtractionWins = value; OnPropertyChanged("EasySubtractionWins"); }
         }
 
         public int MediumSubtractionWins
         {
-            get { return _mediumSubtractionWins; }
+            get => _mediumSubtractionWins;
             set { _mediumSubtractionWins = value; OnPropertyChanged("MediumSubtractionWins"); }
         }
 
         public int HardSubtractionWins
         {
-            get { return _hardSubtractionWins; }
+            get => _hardSubtractionWins;
             set { _hardSubtractionWins = value; OnPropertyChanged("HardSubtractionWins"); }
         }
 
         public int EasyMultiplicationWins
         {
-            get { return _easyMultiplicationWins; }
+            get => _easyMultiplicationWins;
             set { _easyMultiplicationWins = value; OnPropertyChanged("EasyMultiplicationWins"); }
         }
 
         public int MediumMultiplicationWins
         {
-            get { return _mediumMultiplicationWins; }
+            get => _mediumMultiplicationWins;
             set { _mediumMultiplicationWins = value; OnPropertyChanged("MediumMultiplicationWins"); }
         }
 
         public int HardMultiplicationWins
         {
-            get { return _hardMultiplicationWins; }
+            get => _hardMultiplicationWins;
             set { _hardMultiplicationWins = value; OnPropertyChanged("HardMultiplicationWins"); }
         }
 
         public int EasyDivisionWins
         {
-            get { return _easyDivisionWins; }
+            get => _easyDivisionWins;
             set { _easyDivisionWins = value; OnPropertyChanged("EasyDivisionWins"); }
         }
 
         public int MediumDivisionWins
         {
-            get { return _mediumDivisionWins; }
+            get => _mediumDivisionWins;
             set { _mediumDivisionWins = value; OnPropertyChanged("MediumDivisionWins"); }
         }
 
         public int HardDivisionWins
         {
-            get { return _hardDivisionWins; }
+            get => _hardDivisionWins;
             set { _hardDivisionWins = value; OnPropertyChanged("HardDivisionWins"); }
         }
 
         internal List<Achievement> UnlockedAchievements
         {
-            get { return _unlockedAchievements; }
+            get => _unlockedAchievements;
             set { _unlockedAchievements = value; OnPropertyChanged("UnlockedAchievements"); }
         }
 
@@ -122,29 +121,47 @@ namespace MathGame
 
         #endregion Properties
 
+        /// <summary>Loads all Achievements for a player from a string.</summary>
+        /// <param name="achievements">String list of achievements</param>
+        internal void LoadAchievements(string achievements)
+        {
+            string[] arrAchievements = achievements.Split(',');
+            foreach (string str in arrAchievements)
+                UnlockedAchievements.Add(GameState.AllAchievements.Find(ach => ach.Name == str.Trim()));
+        }
+
         #region Data Binding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data Binding
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a default instance of Player.
-        /// </summary>
+        /// <summary>Initializes a default instance of Player.</summary>
         public Player()
         {
         }
 
-        /// <summary>
-        /// Initializes an instace of Player by assigning Properties.
-        /// </summary>
+        /// <summary>Initializes an instace of Player by assigning Properties.</summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <param name="totalWins"></param>
+        /// <param name="easyAdditionWins"></param>
+        /// <param name="mediumAdditionWins"></param>
+        /// <param name="hardAdditionWins"></param>
+        /// <param name="easySubtractionWins"></param>
+        /// <param name="mediumSubtractionWins"></param>
+        /// <param name="hardSubtractionWins"></param>
+        /// <param name="easyMultiplicationWins"></param>
+        /// <param name="mediumMultiplicationWins"></param>
+        /// <param name="hardMultiplicationWins"></param>
+        /// <param name="easyDivisionWins"></param>
+        /// <param name="mediumDivisionWins"></param>
+        /// <param name="hardDivisionWins"></param>
+        /// <param name="unlockedAchievements"></param>
         public Player(string name, string password, int totalWins, int easyAdditionWins, int mediumAdditionWins, int hardAdditionWins, int easySubtractionWins, int mediumSubtractionWins, int hardSubtractionWins, int easyMultiplicationWins, int mediumMultiplicationWins, int hardMultiplicationWins, int easyDivisionWins, int mediumDivisionWins, int hardDivisionWins, List<Achievement> unlockedAchievements)
         {
             Name = name;
@@ -165,28 +182,10 @@ namespace MathGame
             UnlockedAchievements = unlockedAchievements;
         }
 
-        /// <summary>
-        /// Replaces this instance of Player with another instance.
-        /// </summary>
-        /// <param name="otherPlayer">Instance to replace this instance</param>
-        public Player(Player otherPlayer)
+        /// <summary>Replaces this instance of Player with another instance.</summary>
+        /// <param name="other">Instance to replace this instance</param>
+        public Player(Player other) : this(other.Name, other.Password, other.TotalWins, other.EasyAdditionWins, other.MediumAdditionWins, other.HardAdditionWins, other.EasySubtractionWins, other.MediumSubtractionWins, other.HardSubtractionWins, other.EasyMultiplicationWins, other.MediumMultiplicationWins, other.HardMultiplicationWins, other.EasyDivisionWins, other.MediumDivisionWins, other.HardDivisionWins, other.UnlockedAchievements)
         {
-            Name = otherPlayer.Name;
-            Password = otherPlayer.Password;
-            TotalWins = otherPlayer.TotalWins;
-            EasyAdditionWins = otherPlayer.EasyAdditionWins;
-            MediumAdditionWins = otherPlayer.MediumAdditionWins;
-            HardAdditionWins = otherPlayer.HardAdditionWins;
-            EasySubtractionWins = otherPlayer.EasySubtractionWins;
-            MediumSubtractionWins = otherPlayer.MediumSubtractionWins;
-            HardSubtractionWins = otherPlayer.HardSubtractionWins;
-            EasyMultiplicationWins = otherPlayer.EasyMultiplicationWins;
-            MediumMultiplicationWins = otherPlayer.MediumMultiplicationWins;
-            HardMultiplicationWins = otherPlayer.HardMultiplicationWins;
-            EasyDivisionWins = otherPlayer.EasyDivisionWins;
-            MediumDivisionWins = otherPlayer.MediumDivisionWins;
-            HardDivisionWins = otherPlayer.HardDivisionWins;
-            UnlockedAchievements = otherPlayer.UnlockedAchievements;
         }
 
         #endregion Constructors

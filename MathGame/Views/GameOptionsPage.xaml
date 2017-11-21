@@ -1,0 +1,60 @@
+﻿<Page x:Class="MathGame.Views.GameOptionsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Title="Math Game"
+      Style="{StaticResource PageStyle}"
+      Loaded="Page_Loaded">
+    <Grid x:Name="Grid" Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Column="0" BorderBrush="#CCCCCC" BorderThickness="1,1,0,1" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Addition" Margin="10" TextAlignment="Center" />
+                <Button x:Name="BtnAdditionPractice" Width="145" Content="Practice" Margin="10" Click="BtnAdditionPractice_Click" />
+                <Button x:Name="BtnAdditionEasy" Width="145" Content="Easy" Margin="10" Click="BtnAdditionEasy_Click" />
+                <Button x:Name="BtnAdditionMedium" Width="145" Content="Medium" Margin="10" Click="BtnAdditionMedium_Click" />
+                <Button x:Name="BtnAdditionHard" Width="145" Content="Hard" Margin="10" Click="BtnAdditionHard_Click" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="#CCCCCC" BorderThickness="1,1,0,1" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Subtraction" Margin="10" TextAlignment="Center" />
+                <Button x:Name="BtnSubtractionPractice" Width="145" Content="Practice" Margin="10" Click="BtnSubtractionPractice_Click" />
+                <Button x:Name="BtnSubtractionEasy" Width="145" Content="Easy" Margin="10" Click="BtnSubtractionEasy_Click" />
+                <Button x:Name="BtnSubtractionMedium" Width="145" Content="Medium" Margin="10" Click="BtnSubtractionMedium_Click" />
+                <Button x:Name="BtnSubtractionHard" Width="145" Content="Hard" Margin="10" Click="BtnSubtractionHard_Click" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="2" Grid.Row="0" BorderBrush="#CCCCCC" BorderThickness="1,1,0,1" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Multiplication" Margin="10" TextAlignment="Center" />
+                <Button x:Name="BtnMultiplicationPractice" Width="145" Content="Practice" Margin="10" Click="BtnMultiplicationPractice_Click" />
+                <Button x:Name="BtnMultiplicationEasy" Width="145" Content="Easy" Margin="10" Click="BtnMultiplicationEasy_Click" />
+                <Button x:Name="BtnMultiplicationMedium" Width="145" Content="Medium" Margin="10" Click="BtnMultiplicationMedium_Click" />
+                <Button x:Name="BtnMultiplicationHard" Width="145" Content="Hard" Margin="10" Click="BtnMultiplicationHard_Click" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="3" Grid.Row="0" BorderBrush="#CCCCCC" BorderThickness="1" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="Division" Margin="10" TextAlignment="Center" />
+                <Button x:Name="BtnDivisionPractice" Width="145" Content="Practice" Margin="10" Click="BtnDivisionPractice_Click" />
+                <Button x:Name="BtnDivisionEasy" Width="145" Content="Easy" Margin="10" Click="BtnDivisionEasy_Click" />
+                <Button x:Name="BtnDivisionMedium" Width="145" Content="Medium" Margin="10" Click="BtnDivisionMedium_Click" />
+                <Button x:Name="BtnDivisionHard" Width="145" Content="Hard" Margin="10" Click="BtnDivisionHard_Click" />
+            </StackPanel>
+        </Border>
+        <Button x:Name="BtnAchievements" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="145" Content="_Achievements" Click="BtnAchievements_Click" />
+        <Button x:Name="BtnBack" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Width="145" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+    </Grid>
+</Page>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace MathGame
+namespace MathGame.Classes
 {
     internal class Achievement : INotifyPropertyChanged, IEquatable<Achievement>
     {
@@ -12,19 +12,19 @@ namespace MathGame
 
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set { _name = value; OnPropertyChanged("Name"); }
         }
 
         public string Description
         {
-            get { return _description; }
+            get => _description;
             set { _description = value; OnPropertyChanged("Description"); }
         }
 
         public int Points
         {
-            get { return _points; }
+            get => _points;
             set { _points = value; OnPropertyChanged("Points"); OnPropertyChanged("PointsToString"); }
         }
 
@@ -41,7 +41,7 @@ namespace MathGame
 
         public string Type
         {
-            get { return _type; }
+            get => _type;
             set { _type = value; OnPropertyChanged("Type"); OnPropertyChanged("TypeWithText"); }
         }
 
@@ -62,72 +62,41 @@ namespace MathGame
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data Binding
 
         #region Override Operators
 
-        public override bool Equals(object obj)
+        private static bool Equals(Achievement left, Achievement right)
         {
-            Achievement ach = obj as Achievement;
-            if ((object)ach == null)
-                return false;
-
-            return (this.Name == ach.Name) && (this.Description == ach.Description) && (this.Type == ach.Type) && (this.Points == ach.Points);
+            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
+            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Description == right.Description && left.Type == right.Type && left.Points == right.Points;
         }
 
-        public bool Equals(Achievement otherAchievement)
-        {
-            if ((object)otherAchievement == null)
-                return false;
+        public sealed override bool Equals(object obj) => Equals(this, obj as Achievement);
 
-            return (this.Name == otherAchievement.Name) && (this.Description == otherAchievement.Description) && (this.Type == otherAchievement.Type) && (this.Points == otherAchievement.Points);
-        }
+        public bool Equals(Achievement other) => Equals(this, other);
 
-        public static bool operator ==(Achievement left, Achievement right)
-        {
-            if (ReferenceEquals(left, right))
-                return true;
+        public static bool operator ==(Achievement left, Achievement right) => Equals(left, right);
 
-            if (((object)left == null) || ((object)right == null))
-                return false;
+        public static bool operator !=(Achievement left, Achievement right) => !Equals(left, right);
 
-            return (left.Name == right.Name) && (left.Description == right.Description) && (left.Type == right.Type) && (left.Points == right.Points);
-        }
+        public sealed override int GetHashCode() => base.GetHashCode() ^ 17;
 
-        public static bool operator !=(Achievement left, Achievement right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ 17;
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public sealed override string ToString() => Name;
 
         #endregion Override Operators
 
         #region Constructors
 
-        /// <summary>
-        /// Initializes a default instance of Achievement.
-        /// </summary>
+        /// <summary>Initializes a default instance of Achievement.</summary>
         public Achievement()
         {
         }
 
-        /// <summary>
-        /// Initializes an instance of Achievement by assigning Properties.
-        /// </summary>
+        /// <summary>Initializes an instance of Achievement by assigning Properties.</summary>
         /// <param name="name">Name of Achievement</param>
         /// <param name="description">Description of Achievement</param>
         /// <param name="points">Amount of Achievement Points</param>
@@ -140,16 +109,10 @@ namespace MathGame
             Type = type;
         }
 
-        /// <summary>
-        /// Replaces this instance of Achievement with another Achievement.
-        /// </summary>
-        /// <param name="otherAchievement"></param>
-        public Achievement(Achievement otherAchievement)
+        /// <summary>Replaces this instance of Achievement with another Achievement.</summary>
+        /// <param name="other"></param>
+        public Achievement(Achievement other) : this(other.Name, other.Description, other.Points, other.Type)
         {
-            Name = otherAchievement.Name;
-            Description = otherAchievement.Description;
-            Points = otherAchievement.Points;
-            Type = otherAchievement.Type;
         }
 
         #endregion Constructors
