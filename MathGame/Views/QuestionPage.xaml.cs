@@ -108,8 +108,8 @@ namespace MathGame.Views
         /// <summary>Checks all Achievements.</summary>
         private void CheckAllAchievements()
         {
-            CheckAchievements();
             CheckGeneralAchievements();
+            CheckAchievements();
         }
 
         /// <summary>Checks general Achievements.</summary>
@@ -328,9 +328,7 @@ namespace MathGame.Views
             if (!GameState.CurrentPlayer.UnlockedAchievements.Contains(newAchievement))
             {
                 GameState.CurrentPlayer.UnlockedAchievements.Add(newAchievement);
-                NewAchievementPage newAchievementPage = new NewAchievementPage();
-                newAchievementPage.LoadAchievement(newAchievement);
-                GameState.Navigate(newAchievementPage);
+                GameState.EarnAchievement(newAchievement);
             }
         }
 
@@ -476,24 +474,22 @@ namespace MathGame.Views
 
         #region Math Methods
 
-        /// <summary>
-        /// Creates a list of Addition questions.
-        /// </summary>
+        /// <summary>Creates a list of Addition questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Addition(int high, int questions)
         {
             for (int i = 0; i < questions; i++)
             {
-                int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
-                int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
+                int int1 = Functions.GenerateRandomNumber(high / 2, high);
+                int int2 = Functions.GenerateRandomNumber(high / 2, high);
                 int correctAnswer = int1 + int2;
                 List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
-                    int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high, high * 2);
+                    int intNext = Functions.GenerateRandomNumber(high, high * 2);
                     while (possibleAnswers.Contains(intNext))
-                        intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high, high * 2);
+                        intNext = Functions.GenerateRandomNumber(high, high * 2);
                     possibleAnswers.Add(intNext);
                 }
 
@@ -502,25 +498,23 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Subtraction questions.
-        /// </summary>
+        /// <summary>Creates a list of Subtraction questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Subtraction(int high, int questions)
         {
             for (int i = 0; i < questions; i++)
             {
-                int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
-                int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high / 2);
+                int int1 = Functions.GenerateRandomNumber(high / 2, high);
+                int int2 = Functions.GenerateRandomNumber(high / 4, high / 2);
 
                 int correctAnswer = int1 - int2;
                 List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
-                    int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
+                    int intNext = Functions.GenerateRandomNumber(high / 4, high);
                     while (possibleAnswers.Contains(intNext))
-                        intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
+                        intNext = Functions.GenerateRandomNumber(high / 4, high);
                     possibleAnswers.Add(intNext);
                 }
 
@@ -529,25 +523,23 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Multiplication questions.
-        /// </summary>
+        /// <summary>Creates a list of Multiplication questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Multiplication(int high, int questions)
         {
             for (int i = 0; i < questions; i++)
             {
-                int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
-                int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high);
+                int int1 = Functions.GenerateRandomNumber(high / 4, high);
+                int int2 = Functions.GenerateRandomNumber(high / 4, high);
 
                 int correctAnswer = int1 * int2;
                 List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
-                    int intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high * high);
+                    int intNext = Functions.GenerateRandomNumber(high / 4, high * high);
                     while (possibleAnswers.Contains(intNext))
-                        intNext = ThreadSafeRandom.ThisThreadsRandom.Next(high / 4, high * high);
+                        intNext = Functions.GenerateRandomNumber(high / 4, high * high);
                     possibleAnswers.Add(intNext);
                 }
 
@@ -556,30 +548,28 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Division questions.
-        /// </summary>
+        /// <summary>Creates a list of Division questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Division(int high, int questions)
         {
             for (int i = 0; i < questions; i++)
             {
-                int int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
-                int int2 = ThreadSafeRandom.ThisThreadsRandom.Next(2, int1 - 2);
+                int int1 = Functions.GenerateRandomNumber(high / 2, high);
+                int int2 = Functions.GenerateRandomNumber(2, int1 - 2);
 
                 while (int1 % int2 != 0 && int1 != int2)
                 {
-                    int1 = ThreadSafeRandom.ThisThreadsRandom.Next(high / 2, high);
-                    int2 = ThreadSafeRandom.ThisThreadsRandom.Next(2, int1 - 2);
+                    int1 = Functions.GenerateRandomNumber(high / 2, high);
+                    int2 = Functions.GenerateRandomNumber(2, int1 - 2);
                 }
                 int correctAnswer = int1 / int2;
                 List<int> possibleAnswers = new List<int> { correctAnswer };
                 for (int j = 0; j < 3; j++)
                 {
-                    int intNextAnswer = ThreadSafeRandom.ThisThreadsRandom.Next(2, high - 2);
+                    int intNextAnswer = Functions.GenerateRandomNumber(2, correctAnswer * 4);
                     while (possibleAnswers.Contains(intNextAnswer))
-                        intNextAnswer = ThreadSafeRandom.ThisThreadsRandom.Next(2, high - 2);
+                        intNextAnswer = Functions.GenerateRandomNumber(2, correctAnswer * 4);
                     possibleAnswers.Add(intNextAnswer);
                 }
 
@@ -700,10 +690,6 @@ namespace MathGame.Views
 
         private void BtnNewGame_Click(object sender, RoutedEventArgs e) => ClosePage();
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             QuestionIndex++;
@@ -742,6 +728,8 @@ namespace MathGame.Views
             InitializeComponent();
             ClearChecked();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace MathGame.Classes
 {
-    internal class Achievement : INotifyPropertyChanged, IEquatable<Achievement>
+    public class Achievement : INotifyPropertyChanged, IEquatable<Achievement>
     {
         private string _name, _description, _type;
         private int _points;

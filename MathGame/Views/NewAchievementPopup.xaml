@@ -1,12 +1,16 @@
-﻿<Page x:Class="MathGame.Views.NewAchievementPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d"
-      Title="Achievement Unlocked!"
-      Style="{StaticResource PageStyle}"
-      Loaded="Page_Loaded">
+﻿<Window x:Class="MathGame.Views.NewAchievementPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Achievement Unlocked!"
+        Style="{StaticResource WindowStyle}"
+        Icon="Math.ico"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
     <Grid x:Name="Grid" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -24,4 +28,4 @@
         <TextBlock Grid.Row="3" Height="72" TextAlignment="Center" Text="{Binding Path=Description, Mode=TwoWay}" Margin="0,0,0,10" />
         <Button x:Name="BtnContinue" Grid.Row="4" Width="120" Content="_Continue" Click="BtnContinue_Click" IsCancel="True" IsDefault="True" />
     </Grid>
-</Page>
+</Window>

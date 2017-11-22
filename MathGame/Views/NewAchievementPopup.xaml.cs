@@ -5,7 +5,7 @@ using System.Windows;
 namespace MathGame.Views
 {
     /// <summary>Interaction logic for NewAchievementPage.xaml</summary>
-    public partial class NewAchievementPage : INotifyPropertyChanged
+    public partial class NewAchievementPopup : INotifyPropertyChanged
     {
         private Achievement newAchievement = new Achievement();
 
@@ -30,9 +30,14 @@ namespace MathGame.Views
         #region Page-Manipulation Methods
 
         /// <summary>Closes the Page.</summary>
-        private void ClosePage() => GameState.GoBack();
+        private void ClosePage() => Close();
 
-        public NewAchievementPage() => InitializeComponent();
+        public NewAchievementPopup(Achievement newAchievement, Window owner)
+        {
+            InitializeComponent();
+            LoadAchievement(newAchievement);
+            Owner = owner;
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
