@@ -44,12 +44,6 @@ namespace MathGame.Views
 
         private void PswdPassword_GotFocus(object sender, RoutedEventArgs e) => PswdPassword.SelectAll();
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await GameState.LoadAll();
-            GameState.CalculateScale(Grid);
-        }
-
         #endregion Page-Manipulation Methods
     }
 }

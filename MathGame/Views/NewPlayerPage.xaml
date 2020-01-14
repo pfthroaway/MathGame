@@ -5,9 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="New Player"
-      Style="{StaticResource PageStyle}"
-      Loaded="Page_Loaded">
-    <Grid x:Name="Grid" Margin="10">
+      Style="{StaticResource PageStyle}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -22,12 +21,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Username" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="300" TextAlignment="Center" TextChanged="TxtUsername_TextChanged" GotFocus="TxtUsername_GotFocus" MaxLength="20" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="410" TextAlignment="Center" TextChanged="TxtUsername_TextChanged" GotFocus="TxtUsername_GotFocus" MaxLength="20" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Password" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="300" HorizontalContentAlignment="Center" PasswordChanged="PswdPassword_PasswordChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,10" />
+        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="410" HorizontalContentAlignment="Center" PasswordChanged="PswdPassword_PasswordChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="Confirm Password" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdConfirmPassword" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Width="300" HorizontalContentAlignment="Center" PasswordChanged="PswdConfirmPassword_PasswordChanged" GotFocus="PswdConfirmPassword_GotFocus" Margin="0,0,0,20" />
-        <Button x:Name="BtnCreate" Grid.Column="0" Grid.Row="6" Content="_Create" Width="145" Click="BtnCreate_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
-        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="6" Content="_Back" Width="145" Click="BtnBack_Click" IsCancel="True" />
+        <PasswordBox x:Name="PswdConfirmPassword" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Width="410" HorizontalContentAlignment="Center" PasswordChanged="PswdConfirmPassword_PasswordChanged" GotFocus="PswdConfirmPassword_GotFocus" Margin="0,0,0,20" />
+        <Button x:Name="BtnCreate" Grid.Column="0" Grid.Row="6" Content="_Create" Width="200" Click="BtnCreate_Click" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
+        <Button x:Name="BtnBack" Grid.Column="1" Grid.Row="6" Content="_Back" Width="200" Click="BtnBack_Click" IsCancel="True" />
     </Grid>
 </Page>

@@ -64,8 +64,6 @@ namespace MathGame.Views
 
         private void PswdConfirmPassword_GotFocus(object sender, RoutedEventArgs e) => PswdConfirmPassword.SelectAll();
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

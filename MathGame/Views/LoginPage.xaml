@@ -5,9 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="Math Game"
-      Style="{StaticResource PageStyle}"
-      Loaded="Page_Loaded">
-    <Grid x:Name="Grid" Margin="10">
+      Style="{StaticResource PageStyle}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -20,10 +19,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Username" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="300" TextAlignment="Center" TextChanged="TxtUsername_TextChanged" GotFocus="TxtUsername_GotFocus" MaxLength="20" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="410" TextAlignment="Center" TextChanged="TxtUsername_TextChanged" GotFocus="TxtUsername_GotFocus" MaxLength="20" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Password" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="300" HorizontalContentAlignment="Center" PasswordChanged="PswdPassword_PasswordChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,20" />
-        <Button x:Name="BtnLogin" Grid.Column="0" Grid.Row="4" Content="_Login" Width="145" IsEnabled="False" IsDefault="True" Click="BtnLogin_Click" Margin="0,0,10,0" />
-        <Button x:Name="BtnNewPlayer" Grid.Column="1" Grid.Row="4" Content="_New Player" Width="145" Click="BtnNewPlayer_Click" />
+        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="410" HorizontalContentAlignment="Center" PasswordChanged="PswdPassword_PasswordChanged" GotFocus="PswdPassword_GotFocus" Margin="0,0,0,20" />
+        <Button x:Name="BtnLogin" Grid.Column="0" Grid.Row="4" Content="_Login" Width="200" IsEnabled="False" IsDefault="True" Click="BtnLogin_Click" Margin="0,0,10,0" />
+        <Button x:Name="BtnNewPlayer" Grid.Column="1" Grid.Row="4" Content="_New Player" Width="200" Click="BtnNewPlayer_Click" />
     </Grid>
 </Page>

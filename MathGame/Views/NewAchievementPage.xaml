@@ -5,23 +5,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Title="Achievement Unlocked!"
-      Style="{StaticResource PageStyle}"
-      Loaded="Page_Loaded">
-    <Grid x:Name="Grid" Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" Width="300" FontSize="20" TextAlignment="Center" Text="Achievement Unlocked!" Margin="0,0,0,10" />
-        <TextBlock Grid.Row="1" TextAlignment="Center" Text="{Binding Path=Name, Mode=TwoWay}" Margin="0,0,0,10" />
-        <TextBlock Grid.Row="2" TextAlignment="Center" Text="{Binding Path=PointsToString, Mode=OneWay}" Margin="0,0,0,10" />
-        <TextBlock Grid.Row="3" Height="72" TextAlignment="Center" Text="{Binding Path=Description, Mode=TwoWay}" Margin="0,0,0,10" />
-        <Button x:Name="BtnContinue" Grid.Row="4" Width="120" Content="_Continue" Click="BtnContinue_Click" IsCancel="True" IsDefault="True" />
-    </Grid>
+      Style="{StaticResource PageStyle}">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Width="500" FontSize="36" TextAlignment="Center" Text="Achievement Unlocked!" Margin="0,0,0,10" />
+        <TextBlock TextAlignment="Center" Text="{Binding Name}" Margin="0,0,0,10" />
+        <TextBlock TextAlignment="Center" Text="{Binding PointsToString}" Margin="0,0,0,10" />
+        <TextBlock Height="72" TextAlignment="Center" Text="{Binding Description}" Margin="0,0,0,10" />
+        <Button x:Name="BtnContinue" Width="200" Content="_Continue" Click="BtnContinue_Click" IsCancel="True" IsDefault="True" />
+    </StackPanel>
 </Page>

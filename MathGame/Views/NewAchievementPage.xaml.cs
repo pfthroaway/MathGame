@@ -1,21 +1,12 @@
 ﻿using MathGame.Classes;
-using System.ComponentModel;
 using System.Windows;
 
 namespace MathGame.Views
 {
     /// <summary>Interaction logic for NewAchievementPage.xaml</summary>
-    public partial class NewAchievementPage : INotifyPropertyChanged
+    public partial class NewAchievementPage
     {
         private Achievement newAchievement = new Achievement();
-
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         /// <summary>Loads the achievement into the Page.</summary>
         /// <param name="achievement">Newly earned achievement</param>
@@ -33,8 +24,6 @@ namespace MathGame.Views
         private void ClosePage() => GameState.GoBack();
 
         public NewAchievementPage() => InitializeComponent();
-
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

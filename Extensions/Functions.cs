@@ -18,23 +18,35 @@ namespace Extensions
         /// <summary>Verifies that the requested file exists and that its file size is greater than zero. If not, it extracts the embedded file to the local output folder.</summary>
         /// <param name="resourceStream">Resource Stream from Assembly.GetExecutingAssembly().GetManifestResourceStream()</param>
         /// <param name="resourceName">Resource name</param>
-        public static void VerifyFileIntegrity(Stream resourceStream, string resourceName)
+        public static void VerifyFileIntegrity(Stream resourceStream, string resourceName) => VerifyFileIntegrity(resourceStream, resourceName, Directory.GetCurrentDirectory());
+
+        /// <summary>Verifies that the requested file exists and that its file size is greater than zero. If not, it extracts the embedded file to the local output folder.</summary>
+        /// <param name="resourceStream">Resource Stream from Assembly.GetExecutingAssembly().GetManifestResourceStream()</param>
+        /// <param name="resourceName">Resource name</param>
+        /// <param name="directory">Directory to be extracted to</param>
+        public static void VerifyFileIntegrity(Stream resourceStream, string resourceName, string directory)
         {
-            FileInfo fileInfo = new FileInfo(resourceName);
-            if (!File.Exists(resourceName) || fileInfo.Length == 0)
-                ExtractEmbeddedResource(resourceStream, resourceName);
+            FileInfo fileInfo = new FileInfo(Path.Combine(directory, resourceName));
+            if (!File.Exists(Path.Combine(directory, resourceName)) || fileInfo.Length == 0)
+                ExtractEmbeddedResource(resourceStream, resourceName, directory);
         }
 
         /// <summary>Extracts an embedded resource from a Stream.</summary>
         /// <param name="resourceStream">Resource Stream from Assembly.GetExecutingAssembly().GetManifestResourceStream()</param>
         /// <param name="resourceName">Resource name</param>
-        public static void ExtractEmbeddedResource(Stream resourceStream, string resourceName)
+        public static void ExtractEmbeddedResource(Stream resourceStream, string resourceName) => ExtractEmbeddedResource(resourceStream, resourceName, Directory.GetCurrentDirectory());
+
+        /// <summary>Extracts an embedded resource from a Stream.</summary>
+        /// <param name="resourceStream">Resource Stream from Assembly.GetExecutingAssembly().GetManifestResourceStream()</param>
+        /// <param name="resourceName">Resource name</param>
+        /// <param name="directory">Directory to be extracted to</param>
+        public static void ExtractEmbeddedResource(Stream resourceStream, string resourceName, string directory)
         {
             if (resourceStream != null)
             {
                 using (BinaryReader r = new BinaryReader(resourceStream))
                 {
-                    using (FileStream fs = new FileStream(Directory.GetCurrentDirectory() + "\\" + resourceName, FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(directory + "\\" + resourceName, FileMode.OpenOrCreate))
                     {
                         using (BinaryWriter w = new BinaryWriter(fs))
                         {
@@ -119,18 +131,18 @@ namespace Extensions
             switch (keyType)
             {
                 case KeyType.Decimals:
-                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Decimal && k != Key.OemPeriod;
+                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Decimal && k != Key.OemPeriod;
                     break;
 
                 case KeyType.Integers:
-                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9);
+                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9);
                     break;
 
                 case KeyType.Letters:
-                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9);
+                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9);
                     break;
 
                 case KeyType.LettersSpace:
@@ -142,24 +154,24 @@ namespace Extensions
                     break;
 
                 case KeyType.LettersIntegersSpace:
-                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Space;
+                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Space;
                     break;
 
                 case KeyType.LettersIntegersSpaceComma:
-                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Space && k != Key.OemComma;
+                    e.Handled = !keys.Any(key => key) && (Key.A > k || k > Key.Z) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Space && k != Key.OemComma;
                     break;
 
                 case KeyType.NegativeDecimals:
-                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Decimal && k != Key.Subtract &&
-                                k != Key.OemPeriod && k != Key.OemMinus;
+                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Decimal && k != Key.Subtract
+                                && k != Key.OemPeriod && k != Key.OemMinus;
                     break;
 
                 case KeyType.NegativeIntegers:
-                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9) &&
-                                (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Subtract && k != Key.OemMinus;
+                    e.Handled = !keys.Any(key => key) && (Key.D0 > k || k > Key.D9)
+                                && (Key.NumPad0 > k || k > Key.NumPad9) && k != Key.Subtract && k != Key.OemMinus;
                     break;
 
                 default:

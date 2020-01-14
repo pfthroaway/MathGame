@@ -3,6 +3,7 @@ using Extensions.Enums;
 using MathGame.Classes.Database;
 using MathGame.Views;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,25 +21,6 @@ namespace MathGame.Classes
 
         /// <summary>Instance of MainWindow currently loaded</summary>
         internal static MainWindow MainWindow { get; set; }
-
-        /// <summary>Width of the Page currently being displayed in the MainWindow</summary>
-        internal static double CurrentPageWidth { get; set; }
-
-        /// <summary>Height of the Page currently being displayed in the MainWindow</summary>
-        internal static double CurrentPageHeight { get; set; }
-
-        /// <summary>Calculates the scale needed for the MainWindow.</summary>
-        /// <param name="grid">Grid of current Page</param>
-        internal static void CalculateScale(Grid grid)
-        {
-            CurrentPageHeight = grid.ActualHeight;
-            CurrentPageWidth = grid.ActualWidth;
-            MainWindow.CalculateScale();
-
-            Page newPage = MainWindow.MainFrame.Content as Page;
-            if (newPage != null)
-                newPage.Style = (Style)MainWindow.FindResource("PageStyle");
-        }
 
         /// <summary>Navigates to selected Page.</summary>
         /// <param name="newPage">Page to navigate to.</param>
@@ -58,10 +40,18 @@ namespace MathGame.Classes
         /// <returns>True if name can be added</returns>
         internal static async Task<bool> CheckNewPlayerName(string name) => await DatabaseInteraction.CheckNewPlayerName(name);
 
+        /// <summary>Handles verification of required files.</summary>
+        internal static void FileManagement()
+        {
+            if (!Directory.Exists(AppData.Location))
+                Directory.CreateDirectory(AppData.Location);
+            DatabaseInteraction.VerifyDatabaseIntegrity();
+        }
+
         /// <summary>Loads all required information from the database.</summary>
         internal static async Task LoadAll()
         {
-            DatabaseInteraction.VerifyDatabaseIntegrity();
+            FileManagement();
             AllAchievements = await DatabaseInteraction.LoadAchievements();
         }
 
@@ -95,13 +85,13 @@ namespace MathGame.Classes
         /// <param name="message">Message to be displayed</param>
         /// <param name="title">Title of the Notification window</param>
         internal static void DisplayNotification(string message, string title) => Application.Current.Dispatcher.Invoke(
-            () => new Notification(message, title, NotificationButtons.OK, MainWindow).ShowDialog());
+            () => new Notification(message, title, NotificationButton.OK, MainWindow).ShowDialog());
 
         /// <summary>Displays a new Notification in a thread-safe way and retrieves a boolean result upon its closing.</summary>
         /// <param name="message">Message to be displayed</param>
         /// <param name="title">Title of the Notification window</param>
         /// <returns>Returns value of clicked button on Notification.</returns>
-        internal static bool YesNoNotification(string message, string title) => Application.Current.Dispatcher.Invoke(() => (new Notification(message, title, NotificationButtons.YesNo, MainWindow).ShowDialog() == true));
+        internal static bool YesNoNotification(string message, string title) => Application.Current.Dispatcher.Invoke(() => (new Notification(message, title, NotificationButton.YesNo, MainWindow).ShowDialog() == true));
 
         #endregion Notification Management
     }

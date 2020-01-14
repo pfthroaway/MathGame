@@ -1,21 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace MathGame.Classes
 {
-    internal class Question : INotifyPropertyChanged
+    internal class Question : BaseINPC
     {
         private int _int1, _int2, _solution;
         private string _operation;
         private List<int> _possibleSolutions = new List<int>();
-
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Modifying Properties
 
@@ -23,54 +14,54 @@ namespace MathGame.Classes
         public int Int1
         {
             get => _int1;
-            set { _int1 = value; OnPropertyChanged("Int1"); OnPropertyChanged("QuestionToString"); }
+            set { _int1 = value; NotifyPropertyChanged(nameof(Int1), nameof(QuestionToString)); }
         }
 
         /// <summary>Second Integer</summary>
         public int Int2
         {
             get => _int2;
-            set { _int2 = value; OnPropertyChanged("Int2"); OnPropertyChanged("QuestionToString"); }
+            set { _int2 = value; NotifyPropertyChanged(nameof(Int2), nameof(QuestionToString)); }
         }
 
-        /// <summary>Mathematical Operation being performed in this Question.</summary>
+        /// <summary>Mathematical Operation being performed in this <see cref="Question"/>.</summary>
         public string Operation
         {
             get => _operation;
-            set { _operation = value; OnPropertyChanged("Operation"); }
+            set { _operation = value; NotifyPropertyChanged(nameof(Operation)); }
         }
 
-        /// <summary>Correct answer to the Question.</summary>
+        /// <summary>Correct answer to the <see cref="Question"/>.</summary>
         public int Solution
         {
             get => _solution;
-            set { _solution = value; OnPropertyChanged("Int2"); }
+            set { _solution = value; NotifyPropertyChanged(nameof(Solution)); }
         }
 
-        /// <summary>List of possible solutions for this Question that the Player can choose from.</summary>
+        /// <summary>List of possible solutions for this <see cref="Question"/> that the <see cref="Player"/> can choose from.</summary>
         public List<int> PossibleSolutions
         {
             get => _possibleSolutions;
-            set { _possibleSolutions = value; OnPropertyChanged("PossibleSolutions"); }
+            set { _possibleSolutions = value; NotifyPropertyChanged(nameof(PossibleSolutions)); }
         }
 
         #endregion Modifying Properties
 
         #region Helper Properties
 
-        /// <summary>Formatted Question.</summary>
+        /// <summary>Formatted <see cref="Question"/>.</summary>
         public string QuestionToString => Int1 + Operation + Int2;
 
         #endregion Helper Properties
 
         #region Constructors
 
-        /// <summary>Initializes a default instance of Question.</summary>
+        /// <summary>Initializes a default instance of <see cref="Question"/>.</summary>
         internal Question()
         {
         }
 
-        /// <summary>Initializes an instance of Question by assigning Properties.</summary>
+        /// <summary>Initializes an instance of <see cref="Question"/> by assigning Properties.</summary>
         /// <param name="num1">First number</param>
         /// <param name="num2">Second number</param>
         /// <param name="operation">Math operation</param>
@@ -85,8 +76,8 @@ namespace MathGame.Classes
             PossibleSolutions = solutionList;
         }
 
-        /// <summary>Replaces this instance of Question with another instance.</summary>
-        /// <param name="other">Instance to replace this instance</param>
+        /// <summary>Replaces this instance of <see cref="Question"/> with another instance.</summary>
+        /// <param name="other">Instance of <see cref="Question"/> to replace this instance</param>
         public Question(Question other) : this(other.Int1, other.Int2, other.Operation, other.Solution, other.PossibleSolutions)
         {
         }

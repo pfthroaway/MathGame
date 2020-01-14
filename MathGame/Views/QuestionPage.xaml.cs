@@ -3,6 +3,7 @@ using MathGame.Classes;
 using MathGame.Classes.Enums;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace MathGame.Views
@@ -26,35 +27,35 @@ namespace MathGame.Views
         public Operation GameType
         {
             get => _gameType;
-            set { _gameType = value; OnPropertyChanged("GameType"); }
+            set { _gameType = value; NotifyPropertyChanged(nameof(GameType)); }
         }
 
         /// <summary>What is the difficulty level of the current game type?</summary>
         public Difficulty Difficulty
         {
             get => _difficulty;
-            set { _difficulty = value; OnPropertyChanged("Difficulty"); }
+            set { _difficulty = value; NotifyPropertyChanged(nameof(Difficulty)); }
         }
 
         /// <summary>How much score has the current Player achieved this game?</summary>
         public int Score
         {
             get => _score;
-            set { _score = value; OnPropertyChanged("ScoreToString"); }
+            set { _score = value; NotifyPropertyChanged(nameof(Score), nameof(ScoreToString)); }
         }
 
         /// <summary>How many attempts does the current Player have remaining?</summary>
         public int AttemptsRemaining
         {
             get => _attemptsRemaining;
-            set { _attemptsRemaining = value; OnPropertyChanged("AttemptsRemaining"); OnPropertyChanged("AttemptsRemainingToString"); }
+            set { _attemptsRemaining = value; NotifyPropertyChanged(nameof(AttemptsRemaining), nameof(AttemptsRemainingToString)); }
         }
 
         /// <summary>What is the index of the current Question in the List?</summary>
         public int QuestionIndex
         {
             get => _questionIndex;
-            set { _questionIndex = value; OnPropertyChanged("QuestionsRemaining"); }
+            set { _questionIndex = value; NotifyPropertyChanged(nameof(QuestionsRemaining)); }
         }
 
         /// <summary>How many Questions does the current Player have left to complete?</summary>
@@ -64,14 +65,14 @@ namespace MathGame.Views
         internal List<Question> QuestionList
         {
             get => _questionList;
-            set { _questionList = value; OnPropertyChanged("QuestionList"); }
+            set { _questionList = value; NotifyPropertyChanged(nameof(QuestionList)); }
         }
 
         /// <summary>Comment after a Question has been completed.</summary>
         public string Comment
         {
             get => _comment;
-            set { _comment = value; OnPropertyChanged("Comment"); }
+            set { _comment = value; NotifyPropertyChanged(nameof(Comment)); }
         }
 
         #endregion Modifying Properties
@@ -86,22 +87,39 @@ namespace MathGame.Views
 
         #endregion Helper Properties
 
-        #region Data-Binding
+        #region INotifyPropertyChanged Members
 
+        /// <summary>The event that is raised when a property that calls the NotifyPropertyChanged method is changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// Binds information to controls.
-        /// </summary>
+        /// <summary>Raises the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
+        /// <param name="propertyNames">The names of the properties to update in the UI.</param>
+        protected void NotifyPropertyChanged(params string[] propertyNames)
+        {
+            if (PropertyChanged != null)
+            {
+                foreach (string propertyName in propertyNames)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+
+        /// <summary>Raises the PropertyChanged event alerting the WPF Framework to update the UI.</summary>
+        /// <param name="propertyName">The optional name of the property to update in the UI. If this is left blank, the name will be taken from the calling member via the CallerMemberName attribute.</param>
+        protected virtual void NotifyPropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>Binds information to controls.</summary>
         private void BindLabels()
         {
             DataContext = this;
             lblQuestion.DataContext = _selectedQuestion;
         }
 
-        protected virtual void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
+        #endregion INotifyPropertyChanged Members
 
         #region Achievement-Manipulation
 
@@ -476,9 +494,7 @@ namespace MathGame.Views
 
         #region Math Methods
 
-        /// <summary>
-        /// Creates a list of Addition questions.
-        /// </summary>
+        /// <summary>Creates a list of Addition questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Addition(int high, int questions)
@@ -502,9 +518,7 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Subtraction questions.
-        /// </summary>
+        /// <summary>Creates a list of Subtraction questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Subtraction(int high, int questions)
@@ -529,9 +543,7 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Multiplication questions.
-        /// </summary>
+        /// <summary>Creates a list of Multiplication questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Multiplication(int high, int questions)
@@ -556,9 +568,7 @@ namespace MathGame.Views
             }
         }
 
-        /// <summary>
-        /// Creates a list of Division questions.
-        /// </summary>
+        /// <summary>Creates a list of Division questions.</summary>
         /// <param name="high">Highest value for this question set</param>
         /// <param name="questions">Number of questions for this question set</param>
         private void Division(int high, int questions)
@@ -592,9 +602,7 @@ namespace MathGame.Views
 
         #region Display-Manipulation Methods
 
-        /// <summary>
-        /// Clear all radio checked.
-        /// </summary>
+        /// <summary>Clear all radio checked.</summary>
         private void ClearChecked()
         {
             radA.IsChecked = false;
@@ -603,9 +611,7 @@ namespace MathGame.Views
             radD.IsChecked = false;
         }
 
-        /// <summary>
-        /// Disable all the buttons.
-        /// </summary>
+        /// <summary>Disable all the buttons.</summary>
         private void DisableButtions()
         {
             QuestionDone = true;
@@ -614,14 +620,10 @@ namespace MathGame.Views
             BtnNewGame.IsEnabled = true;
         }
 
-        /// <summary>
-        /// Displays statistics and the current question.
-        /// </summary>
+        /// <summary>Displays statistics and the current question.</summary>
         private void Display() => DisplayPossibleAnswers();
 
-        /// <summary>
-        /// Displays the question and possible answers.
-        /// </summary>
+        /// <summary>Displays the question and possible answers.</summary>
         private void DisplayPossibleAnswers()
         {
             radA.Content = _selectedQuestion.PossibleSolutions[0].ToString("N0");
@@ -634,10 +636,8 @@ namespace MathGame.Views
 
         #region Question Results
 
-        /// <summary>
-        /// Check whether the selected radio button is the correct answer.
-        /// </summary>
-        /// <param name="radChecked">Which radio button is checked</param>
+        /// <summary>Checks whether the selected radio button is the correct answer.</summary>
+        /// <param name="radChecked">Which radio button is checked?</param>
         private void CheckCorrect(int radChecked)
         {
             if (QuestionList[QuestionIndex].Solution == QuestionList[QuestionIndex].PossibleSolutions[radChecked])
@@ -646,9 +646,7 @@ namespace MathGame.Views
                 Incorrect();
         }
 
-        /// <summary>
-        /// You got the question correct.
-        /// </summary>
+        /// <summary>The question was answered correctly.</summary>
         private void Correct()
         {
             QuestionDone = true;
@@ -666,9 +664,7 @@ namespace MathGame.Views
             Comment = "Good job!";
         }
 
-        /// <summary>
-        /// You got the question incorrect.
-        /// </summary>
+        /// <summary>The question was answered incorrectly.</summary>
         private void Incorrect()
         {
             AttemptsRemaining--;
@@ -699,10 +695,6 @@ namespace MathGame.Views
         }
 
         private void BtnNewGame_Click(object sender, RoutedEventArgs e) => ClosePage();
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {

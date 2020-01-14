@@ -1,136 +1,153 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace MathGame.Classes
 {
-    internal class Player : INotifyPropertyChanged
+    /// <summary>Represents a <see cref="Player"/> of the game.</summary>
+    internal class Player : BaseINPC
     {
-        private string _name, _password;
+        private string _name;
         private int _totalWins, _easyAdditionWins, _mediumAdditionWins, _hardAdditionWins, _veryHardAdditionWins, _easySubtractionWins, _mediumSubtractionWins, _hardSubtractionWins, _veryHardSubtractionWins, _easyMultiplicationWins, _mediumMultiplicationWins, _hardMultiplicationWins, _veryHardMultiplicationWins, _easyDivisionWins, _mediumDivisionWins, _hardDivisionWins, _veryHardDivisionWins;
         private List<Achievement> _unlockedAchievements = new List<Achievement>();
 
         #region Properties
 
+        /// <summary>Name of the <see cref="Player"/>.</summary>
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
-        public string Password
-        {
-            get => _password;
-            set { _password = value; OnPropertyChanged("Name"); }
-        }
+        /// <summary>The <see cref="Player"/>'s hashed password.</summary>
+        public string Password { get; set; }
 
+        /// <summary>The <see cref="Player"/>'s total wins.</summary>
         public int TotalWins
         {
             get => _totalWins;
-            set { _totalWins = value; OnPropertyChanged("TotalWins"); }
+            set { _totalWins = value; NotifyPropertyChanged(nameof(TotalWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Easy Addition wins.</summary>
         public int EasyAdditionWins
         {
             get => _easyAdditionWins;
-            set { _easyAdditionWins = value; OnPropertyChanged("EasyAdditionWins"); }
+            set { _easyAdditionWins = value; NotifyPropertyChanged(nameof(EasyAdditionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Medium Addition wins.</summary>
         public int MediumAdditionWins
         {
             get => _mediumAdditionWins;
-            set { _mediumAdditionWins = value; OnPropertyChanged("MediumAdditionWins"); }
+            set { _mediumAdditionWins = value; NotifyPropertyChanged(nameof(MediumAdditionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Hard Addition wins.</summary>
         public int HardAdditionWins
         {
             get => _hardAdditionWins;
-            set { _hardAdditionWins = value; OnPropertyChanged("HardAdditionWins"); }
+            set { _hardAdditionWins = value; NotifyPropertyChanged(nameof(HardAdditionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Very Hard Addition wins.</summary>
         public int VeryHardAdditionWins
         {
             get => _veryHardAdditionWins;
-            set { _veryHardAdditionWins = value; OnPropertyChanged("VeryHardAdditionWins"); }
+            set { _veryHardAdditionWins = value; NotifyPropertyChanged(nameof(VeryHardAdditionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Easy Subtraction wins.</summary>
         public int EasySubtractionWins
         {
             get => _easySubtractionWins;
-            set { _easySubtractionWins = value; OnPropertyChanged("EasySubtractionWins"); }
+            set { _easySubtractionWins = value; NotifyPropertyChanged(nameof(EasySubtractionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Medium Subtraction wins.</summary>
         public int MediumSubtractionWins
         {
             get => _mediumSubtractionWins;
-            set { _mediumSubtractionWins = value; OnPropertyChanged("MediumSubtractionWins"); }
+            set { _mediumSubtractionWins = value; NotifyPropertyChanged(nameof(MediumSubtractionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Hard Subtraction wins.</summary>
         public int HardSubtractionWins
         {
             get => _hardSubtractionWins;
-            set { _hardSubtractionWins = value; OnPropertyChanged("HardSubtractionWins"); }
+            set { _hardSubtractionWins = value; NotifyPropertyChanged(nameof(HardSubtractionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Very Hard Subtraction wins.</summary>
         public int VeryHardSubtractionWins
         {
             get => _veryHardSubtractionWins;
-            set { _veryHardSubtractionWins = value; OnPropertyChanged("VeryHardSubtractionWins"); }
+            set { _veryHardSubtractionWins = value; NotifyPropertyChanged(nameof(VeryHardSubtractionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Easy Multiplication wins.</summary>
         public int EasyMultiplicationWins
         {
             get => _easyMultiplicationWins;
-            set { _easyMultiplicationWins = value; OnPropertyChanged("EasyMultiplicationWins"); }
+            set { _easyMultiplicationWins = value; NotifyPropertyChanged(nameof(EasyMultiplicationWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Medium Multiplication wins.</summary>
         public int MediumMultiplicationWins
         {
             get => _mediumMultiplicationWins;
-            set { _mediumMultiplicationWins = value; OnPropertyChanged("MediumMultiplicationWins"); }
+            set { _mediumMultiplicationWins = value; NotifyPropertyChanged(nameof(MediumMultiplicationWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Hard Multiplication wins.</summary>
         public int HardMultiplicationWins
         {
             get => _hardMultiplicationWins;
-            set { _hardMultiplicationWins = value; OnPropertyChanged("HardMultiplicationWins"); }
+            set { _hardMultiplicationWins = value; NotifyPropertyChanged(nameof(HardMultiplicationWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Very Hard Multiplication wins.</summary>
         public int VeryHardMultiplicationWins
         {
             get => _veryHardMultiplicationWins;
-            set { _veryHardMultiplicationWins = value; OnPropertyChanged("VeryHardMultiplicationWins"); }
+            set { _veryHardMultiplicationWins = value; NotifyPropertyChanged(nameof(VeryHardMultiplicationWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Easy Division wins.</summary>
         public int EasyDivisionWins
         {
             get => _easyDivisionWins;
-            set { _easyDivisionWins = value; OnPropertyChanged("EasyDivisionWins"); }
+            set { _easyDivisionWins = value; NotifyPropertyChanged(nameof(EasyDivisionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Medium Division wins.</summary>
         public int MediumDivisionWins
         {
             get => _mediumDivisionWins;
-            set { _mediumDivisionWins = value; OnPropertyChanged("MediumDivisionWins"); }
+            set { _mediumDivisionWins = value; NotifyPropertyChanged(nameof(MediumDivisionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Hard Division wins.</summary>
         public int HardDivisionWins
         {
             get => _hardDivisionWins;
-            set { _hardDivisionWins = value; OnPropertyChanged("HardDivisionWins"); }
+            set { _hardDivisionWins = value; NotifyPropertyChanged(nameof(HardDivisionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s total Very Hard Division wins.</summary>
         public int VeryHardDivisionWins
         {
             get => _veryHardDivisionWins;
-            set { _veryHardDivisionWins = value; OnPropertyChanged("VeryHardDivisionWins"); }
+            set { _veryHardDivisionWins = value; NotifyPropertyChanged(nameof(VeryHardDivisionWins)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s unlocked achievements.</summary>
         internal List<Achievement> UnlockedAchievements
         {
             get => _unlockedAchievements;
-            set { _unlockedAchievements = value; OnPropertyChanged("UnlockedAchievements"); }
+            set { _unlockedAchievements = value; NotifyPropertyChanged(nameof(UnlockedAchievements)); }
         }
 
+        /// <summary>The <see cref="Player"/>'s unlocked achievements, formatted.</summary>
         public string UnlockedAchievementsToString
         {
             get
@@ -149,18 +166,9 @@ namespace MathGame.Classes
         /// <param name="achievements">String list of achievements</param>
         internal void LoadAchievements(string achievements)
         {
-            string[] arrAchievements = achievements.Split(',');
-            foreach (string str in arrAchievements)
+            foreach (string str in achievements.Split(','))
                 UnlockedAchievements.Add(GameState.AllAchievements.Find(ach => ach.Name == str.Trim()));
         }
-
-        #region Data Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data Binding
 
         #region Constructors
 

@@ -1,77 +1,55 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace MathGame.Classes
 {
-    internal class Achievement : INotifyPropertyChanged, IEquatable<Achievement>
+    /// <summary>Represents an <see cref="Achievement"/> that the <see cref="Player"/> can earn.</summary>
+    internal class Achievement : BaseINPC
     {
         private string _name, _description, _type;
         private int _points;
 
         #region Properties
 
+        /// <summary>Name of the <see cref="Achievement"/>.</summary>
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
+        /// <summary>Description of the <see cref="Achievement"/>.</summary>
         public string Description
         {
             get => _description;
-            set { _description = value; OnPropertyChanged("Description"); }
+            set { _description = value; NotifyPropertyChanged(nameof(Description)); }
         }
 
+        /// <summary>Points value of the <see cref="Achievement"/>.</summary>
         public int Points
         {
             get => _points;
-            set { _points = value; OnPropertyChanged("Points"); OnPropertyChanged("PointsToString"); }
+            set { _points = value; NotifyPropertyChanged(nameof(Points), nameof(PointsToString)); }
         }
 
-        public string PointsToString
-        {
-            get
-            {
-                if (Points > 0)
-                    return "Points: " + Points.ToString("N0");
-                else
-                    return "";
-            }
-        }
+        /// <summary>Points value of the <see cref="Achievement"/>, formatted with preceding text.</summary>
+        public string PointsToString => Points > 0 ? $"Points: {Points:N0}" : "";
 
         public string Type
         {
             get => _type;
-            set { _type = value; OnPropertyChanged("Type"); OnPropertyChanged("TypeWithText"); }
+            set { _type = value; NotifyPropertyChanged(nameof(Type), nameof(TypeWithText)); }
         }
 
-        public string TypeWithText
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(Type))
-                    return "Type: " + Type;
-                else
-                    return "";
-            }
-        }
+        public string TypeWithText => !string.IsNullOrWhiteSpace(Type) ? $"Type: {Type}" : "";
 
         #endregion Properties
-
-        #region Data Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data Binding
 
         #region Override Operators
 
         private static bool Equals(Achievement left, Achievement right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && left.Description == right.Description && left.Type == right.Type && left.Points == right.Points;
         }
 
@@ -91,16 +69,16 @@ namespace MathGame.Classes
 
         #region Constructors
 
-        /// <summary>Initializes a default instance of Achievement.</summary>
+        /// <summary>Initializes a default instance of <see cref="Achievement"/>.</summary>
         public Achievement()
         {
         }
 
-        /// <summary>Initializes an instance of Achievement by assigning Properties.</summary>
-        /// <param name="name">Name of Achievement</param>
-        /// <param name="description">Description of Achievement</param>
-        /// <param name="points">Amount of Achievement Points</param>
-        /// <param name="type">Type of Achievement</param>
+        /// <summary>Initializes an instance of <see cref="Achievement"/> by assigning Properties.</summary>
+        /// <param name="name">Name of <see cref="Achievement"/></param>
+        /// <param name="description">Description of <see cref="Achievement"/></param>
+        /// <param name="points">Amount of <see cref="Achievement"/> Points</param>
+        /// <param name="type">Type of <see cref="Achievement"/></param>
         public Achievement(string name, string description, int points, string type)
         {
             Name = name;
@@ -109,8 +87,8 @@ namespace MathGame.Classes
             Type = type;
         }
 
-        /// <summary>Replaces this instance of Achievement with another Achievement.</summary>
-        /// <param name="other"></param>
+        /// <summary>Replaces this instance of <see cref="Achievement"/> with another <see cref="Achievement"/>.</summary>
+        /// <param name="other">Instance of <see cref="Achievement"/> to replace this instance</param>
         public Achievement(Achievement other) : this(other.Name, other.Description, other.Points, other.Type)
         {
         }

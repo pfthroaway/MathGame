@@ -71,8 +71,6 @@ namespace MathGame.Views
             lblPointsUnlocked.DataContext = selectedUnlocked;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }
