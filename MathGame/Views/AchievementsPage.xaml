@@ -17,23 +17,23 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <GroupBox Grid.Column="0" Grid.Row="0" Header="Unlocked Achievements" Margin="0,0,10,5">
-            <ListBox x:Name="lstUnlocked" Height="410" Width="410" ItemsSource="{Binding}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="LstUnlocked_SelectionChanged" />
+            <ListBox x:Name="lstUnlocked" Height="410" Width="550" ItemsSource="{Binding}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="LstUnlocked_SelectionChanged" />
         </GroupBox>
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Locked Achievements" Margin="0,0,0,5">
-            <ListBox x:Name="lstLocked" Height="410" Width="410" ItemsSource="{Binding}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="LstLocked_SelectionChanged" />
+            <ListBox x:Name="lstLocked" Height="410" Width="550" ItemsSource="{Binding}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="LstLocked_SelectionChanged" />
         </GroupBox>
-        <GroupBox Grid.Column="0" Grid.Row="1" Header="Achievement Information" Margin="0,0,10,10">
+        <GroupBox x:Name="GrpUnlocked" Grid.Column="0" Grid.Row="1" Header="Achievement Information" Margin="0,0,10,10">
             <StackPanel Margin="10">
-                <TextBlock x:Name="lblTypeUnlocked" Width="290" Text="{Binding TypeWithText}" TextWrapping="Wrap" Margin="5" />
-                <TextBlock x:Name="lblDescriptionUnlocked" Width="290" Height="72" Text="{Binding Description}" TextWrapping="Wrap" Margin="5" />
-                <TextBlock x:Name="lblPointsUnlocked" Width="290" Text="{Binding PointsToString}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblTypeUnlocked" Width="550" Text="{Binding TypeWithText}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblDescriptionUnlocked" Width="550" Height="72" Text="{Binding Description}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblPointsUnlocked" Width="550" Text="{Binding PointsToString}" TextWrapping="Wrap" Margin="5" />
             </StackPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Grid.Row="1" Header="Achievement Information" Margin="0,0,0,10">
+        <GroupBox x:Name="GrpLocked" Grid.Column="1" Grid.Row="1" Header="Achievement Information" Margin="0,0,0,10">
             <StackPanel Margin="10">
-                <TextBlock x:Name="lblTypeLocked" Width="290" Text="{Binding TypeWithText}" TextWrapping="Wrap" Margin="5" />
-                <TextBlock x:Name="lblDescriptionLocked" Width="290" Height="72" Text="{Binding Description}" TextWrapping="Wrap" Margin="5" />
-                <TextBlock x:Name="lblPointsLocked" Width="290" Text="{Binding PointsToString}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblTypeLocked" Width="550" Text="{Binding TypeWithText}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblDescriptionLocked" Width="550" Height="72" Text="{Binding Description}" TextWrapping="Wrap" Margin="5" />
+                <TextBlock x:Name="lblPointsLocked" Width="550" Text="{Binding PointsToString}" TextWrapping="Wrap" Margin="5" />
             </StackPanel>
         </GroupBox>
         <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="200" Content="_Back" IsCancel="True" Click="BtnBack_Click" />

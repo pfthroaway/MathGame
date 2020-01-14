@@ -1,38 +1,25 @@
 ﻿using MathGame.Classes;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace MathGame.Views
 {
     /// <summary>Interaction logic for AchievementsPage.xaml</summary>
-    public partial class AchievementsPage : INotifyPropertyChanged
+    public partial class AchievementsPage
     {
         private Achievement selectedUnlocked = new Achievement();
         private Achievement selectedLocked = new Achievement();
         private readonly List<Achievement> lockedAchievements = new List<Achievement>(GameState.AllAchievements);
 
-        #region Data-Binding
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>Binds information to controls.</summary>
         private void BindLabels()
         {
-            lblTypeUnlocked.DataContext = selectedUnlocked;
-            lblDescriptionUnlocked.DataContext = selectedUnlocked;
-            lblPointsUnlocked.DataContext = selectedUnlocked;
-            lblTypeLocked.DataContext = selectedLocked;
-            lblDescriptionLocked.DataContext = selectedLocked;
-            lblPointsLocked.DataContext = selectedLocked;
             lstUnlocked.ItemsSource = GameState.CurrentPlayer.UnlockedAchievements;
             lstLocked.ItemsSource = lockedAchievements;
+            GrpLocked.DataContext = selectedLocked;
+            GrpUnlocked.DataContext = selectedUnlocked;
         }
-
-        protected virtual void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         /// <summary>Loads all Locked Achievements.</summary>
         private void LoadLocked()
@@ -58,17 +45,13 @@ namespace MathGame.Views
         private void LstLocked_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedLocked = (Achievement)lstLocked.SelectedValue;
-            lblTypeLocked.DataContext = selectedLocked;
-            lblDescriptionLocked.DataContext = selectedLocked;
-            lblPointsLocked.DataContext = selectedLocked;
+            BindLabels();
         }
 
         private void LstUnlocked_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedUnlocked = (Achievement)lstUnlocked.SelectedValue;
-            lblTypeUnlocked.DataContext = selectedUnlocked;
-            lblDescriptionUnlocked.DataContext = selectedUnlocked;
-            lblPointsUnlocked.DataContext = selectedUnlocked;
+            BindLabels();
         }
 
         #endregion Page-Manipulation Methods

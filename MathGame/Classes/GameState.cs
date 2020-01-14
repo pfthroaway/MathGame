@@ -82,8 +82,7 @@ namespace MathGame.Classes
         #region Achievement Management
 
         /// <summary>Displays a new Notification in a thread-safe way.</summary>
-        /// <param name="message">Message to be displayed</param>
-        /// <param name="title">Title of the Notification window</param>
+        /// <param name="newAchievement"><see cref="Achievement"/> earned</param>
         internal static void EarnAchievement(Achievement newAchievement) => Application.Current.Dispatcher.Invoke(
             () => new NewAchievementPopup(newAchievement, MainWindow).ShowDialog());
 

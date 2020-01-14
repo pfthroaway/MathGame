@@ -3,7 +3,7 @@
 namespace MathGame.Classes
 {
     /// <summary>Represents an <see cref="Achievement"/> that the <see cref="Player"/> can earn.</summary>
-    internal class Achievement : BaseINPC
+    public class Achievement : BaseINPC
     {
         private string _name, _description, _type;
         private int _points;
