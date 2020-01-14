@@ -21,12 +21,12 @@
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10">
             <TextBlock x:Name="lblQuestion" Width="200" TextAlignment="Center" FontSize="20" Text="{Binding QuestionToString}" />
         </Border>
-        <GroupBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10">
+        <GroupBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Header="Select a number..." Margin="10">
             <StackPanel>
-                <RadioButton x:Name="radA" Margin="10" Checked="CheckedChanged" />
-                <RadioButton x:Name="radB" Margin="10" Checked="CheckedChanged" />
-                <RadioButton x:Name="radC" Margin="10" Checked="CheckedChanged" />
-                <RadioButton x:Name="radD" Margin="10" Checked="CheckedChanged" />
+                <RadioButton x:Name="radA" Checked="CheckedChanged" Margin="10" />
+                <RadioButton x:Name="radB" Checked="CheckedChanged" Margin="10" />
+                <RadioButton x:Name="radC" Checked="CheckedChanged" Margin="10" />
+                <RadioButton x:Name="radD" Checked="CheckedChanged" Margin="10" />
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="0,0,10,0">

@@ -110,8 +110,8 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewAchievementPage.xaml.cs">
-      <DependentUpon>NewAchievementPage.xaml</DependentUpon>
+    <Compile Include="Views\NewAchievementPopup.xaml.cs">
+      <DependentUpon>NewAchievementPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewPlayerPage.xaml.cs">
       <DependentUpon>NewPlayerPage.xaml</DependentUpon>
@@ -145,7 +145,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\NewAchievementPage.xaml">
+    <Page Include="Views\NewAchievementPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

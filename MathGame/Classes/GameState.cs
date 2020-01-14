@@ -79,6 +79,16 @@ namespace MathGame.Classes
         /// <summary>Saves the current Player.</summary>
         internal static async void SavePlayer() => await DatabaseInteraction.SavePlayer(CurrentPlayer);
 
+        #region Achievement Management
+
+        /// <summary>Displays a new Notification in a thread-safe way.</summary>
+        /// <param name="message">Message to be displayed</param>
+        /// <param name="title">Title of the Notification window</param>
+        internal static void EarnAchievement(Achievement newAchievement) => Application.Current.Dispatcher.Invoke(
+            () => new NewAchievementPopup(newAchievement, MainWindow).ShowDialog());
+
+        #endregion Achievement Management
+
         #region Notification Management
 
         /// <summary>Displays a new Notification in a thread-safe way.</summary>
