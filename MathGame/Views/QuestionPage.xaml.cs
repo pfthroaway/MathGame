@@ -668,10 +668,10 @@ namespace MathGame.Views
             AttemptsRemaining--;
             Score -= 5;
             if (AttemptsRemaining > 0)
-                lblComment.Text = "Incorrect. Try again.";
+                Comment = "Incorrect. Try again.";
             else
             {
-                lblComment.Text = "Incorrect. You lose!";
+                Comment = "Incorrect. You lose!";
                 DisableButtions();
             }
         }
